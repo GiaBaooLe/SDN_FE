@@ -9,6 +9,7 @@ import {
 } from "../redux/features/shop/shopSlice";
 import Loader from "../components/Loader";
 import ProductCard from "./Products/ProductCard";
+import SearchBar from "../components/SearchBar";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -80,9 +81,17 @@ const Shop = () => {
     setPriceFilter(e.target.value);
   };
 
+  const handleSearch = (searchTerm) => {
+    const filteredProducts = filteredProductsQuery.data.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    dispatch(setProducts(filteredProducts));
+  };
+
   return (
     <>
       <div className="container mx-auto">
+        <SearchBar onSearch={handleSearch} /> {/* Include the SearchBar component */}
         <div className="flex md:flex-row">
           <div className="bg-white text-pink-600 p-3 mt-2 mb-2 shadow-lg rounded-lg">
             <h2 className="h4 text-center py-2 bg-pink-600 text-white rounded-full mb-2">
@@ -95,13 +104,13 @@ const Shop = () => {
                   <div className="flex items-center mr-4">
                     <input
                       type="checkbox"
-                      id="red-checkbox"
+                      id={`category-${c._id}`}
                       onChange={(e) => handleCheck(e.target.checked, c._id)}
                       className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
 
                     <label
-                      htmlFor="pink-checkbox"
+                      htmlFor={`category-${c._id}`}
                       className="ml-2 text-sm font-medium text-pink-600"
                     >
                       {c.name}
@@ -117,24 +126,21 @@ const Shop = () => {
 
             <div className="p-5">
               {uniqueBrands?.map((brand) => (
-                <>
-                  <div className="flex items-center mr-4 mb-5">
-                    <input
-                      type="radio"
-                      id={brand}
-                      name="brand"
-                      onChange={() => handleBrandClick(brand)}
-                      className="w-4 h-4 text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
-
-                    <label
-                      htmlFor="pink-radio"
-                      className="ml-2 text-sm font-medium text-pink-600"
-                    >
-                      {brand}
-                    </label>
-                  </div>
-                </>
+                <div key={brand} className="flex items-center mr-4 mb-5">
+                  <input
+                    type="radio"
+                    id={brand}
+                    name="brand"
+                    onChange={() => handleBrandClick(brand)}
+                    className="w-4 h-4 text-pink-400 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor={brand}
+                    className="ml-2 text-sm font-medium text-pink-600"
+                  >
+                    {brand}
+                  </label>
+                </div>
               ))}
             </div>
 
@@ -181,5 +187,4 @@ const Shop = () => {
     </>
   );
 };
-
 export default Shop;
