@@ -33,21 +33,17 @@ const Shop = () => {
   }, [categoriesQuery.data, dispatch]);
 
   useEffect(() => {
-    if (!checked.length || !radio.length) {
-      if (!filteredProductsQuery.isLoading) {
-        // Filter products based on both checked categories and price filter
-        const filteredProducts = filteredProductsQuery.data.filter(
-          (product) => {
-            // Check if the product price includes the entered price filter value
-            return (
-              product.price.toString().includes(priceFilter) ||
-              product.price === parseInt(priceFilter, 10)
-            );
-          }
+    if (!filteredProductsQuery.isLoading) {
+      const filteredProducts = filteredProductsQuery.data.filter((product) => {
+        return (
+          (checked.length === 0 || checked.includes(product.category)) &&
+          (radio.length === 0 || radio.includes(product.brand)) &&
+          (priceFilter === "" ||
+            product.price.toString().includes(priceFilter) ||
+            product.price === parseInt(priceFilter, 10))
         );
-
-        dispatch(setProducts(filteredProducts));
-      }
+      });
+      dispatch(setProducts(filteredProducts));
     }
   }, [checked, radio, filteredProductsQuery.data, dispatch, priceFilter]);
 
