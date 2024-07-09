@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { Card, Col, Row, Statistic } from "antd";
+import { DollarCircleOutlined, UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Chart from "react-apexcharts";
 import { useGetUsersQuery } from "../../redux/api/usersApiSlice";
 import {
@@ -5,8 +8,6 @@ import {
   useGetTotalSalesByDateQuery,
   useGetTotalSalesQuery,
 } from "../../redux/api/orderApiSlice";
-
-import { useState, useEffect } from "react";
 import AdminMenu from "./AdminMenu";
 import OrderList from "./OrderList";
 import Loader from "../../components/Loader";
@@ -91,51 +92,50 @@ const AdminDashboard = () => {
   return (
     <>
       <AdminMenu />
+      <section className="xl:ml-[4rem] md:ml-[0rem] p-5">
+        <Row gutter={16} className="mb-5">
+          <Col span={8}>
+            <Card className="bg-white text-black">
+              <Statistic
+                title="Sales"
+                value={isLoading ? <Loader /> : sales?.totalSales?.toFixed(2)}
+                prefix={<DollarCircleOutlined style={{ color: "yellow" }} />}
+                valueStyle={{ color: "black" }}
+              />
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card className="bg-white text-black">
+              <Statistic
+                title="Customers"
+                value={loading ? <Loader /> : customers?.length}
+                prefix={<UserOutlined style={{ color: "yellow" }} />}
+                valueStyle={{ color: "black" }}
+              />
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card className="bg-white text-black">
+              <Statistic
+                title="All Orders"
+                value={loadingTwo ? <Loader /> : orders?.totalOrders}
+                prefix={<ShoppingCartOutlined style={{ color: "yellow" }} />}
+                valueStyle={{ color: "black" }}
+              />
+            </Card>
+          </Col>
+        </Row>
 
-      <section className="xl:ml-[4rem] md:ml-[0rem]">
-        <div className="w-[80%] flex justify-around flex-wrap">
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
-            </div>
-
-            <p className="mt-5">Sales</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : sales.totalSales.toFixed(2)}
-            </h1>
-          </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
-            </div>
-
-            <p className="mt-5">Customers</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : customers?.length}
-            </h1>
-          </div>
-          <div className="rounded-lg bg-black p-5 w-[20rem] mt-5">
-            <div className="font-bold rounded-full w-[3rem] bg-pink-500 text-center p-3">
-              $
-            </div>
-
-            <p className="mt-5">All Orders</p>
-            <h1 className="text-xl font-bold">
-              $ {isLoading ? <Loader /> : orders?.totalOrders}
-            </h1>
-          </div>
-        </div>
-
-        <div className="ml-[10rem] mt-[4rem]">
+        <div className="bg-white p-5 rounded-lg">
           <Chart
             options={state.options}
             series={state.series}
             type="bar"
-            width="70%"
+            width="100%"
           />
         </div>
 
-        <div className="mt-[4rem]">
+        <div className="mt-5">
           <OrderList />
         </div>
       </section>
