@@ -49,8 +49,8 @@ const Cart = () => {
                       {item.name}
                     </Link>
 
-                    <div className="mt-2 text-white">{item.brand}</div>
-                    <div className="mt-2 text-white font-bold">
+                    <div className="mt-2 text-black">{item.brand}</div>
+                    <div className="mt-2 text-black font-bold">
                       $ {item.price}
                     </div>
                   </div>

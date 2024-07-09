@@ -102,7 +102,7 @@ const Shop = () => {
 
                     <label
                       htmlFor="pink-checkbox"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      className="ml-2 text-sm font-medium text-black dark:text-gray-300"
                     >
                       {c.name}
                     </label>
@@ -129,7 +129,7 @@ const Shop = () => {
 
                     <label
                       htmlFor="pink-radio"
-                      className="ml-2 text-sm font-medium text-white dark:text-gray-300"
+                      className="ml-2 text-sm font-medium text-black dark:text-gray-300"
                     >
                       {brand}
                     </label>
