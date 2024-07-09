@@ -1,33 +1,30 @@
 import { useEffect, useState } from "react";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
-import Message from "../../components/Message";
-import Loader from "../../components/Loader";
-import {
-  useDeleteUserMutation,
-  useGetUsersQuery,
-  useUpdateUserMutation,
-} from "../../redux/api/usersApiSlice";
+import { Table, Button, Input, Space, Typography } from "antd";
+import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserMutation } from "../../redux/api/usersApiSlice";
 import { toast } from "react-toastify";
-// ⚠️⚠️⚠️ don't forget this ⚠️⚠️⚠️⚠️
-// import AdminMenu from "./AdminMenu";
+import AdminMenu from "./AdminMenu";
+import Loader from "../../components/Loader";
+import Message from "../../components/Message";
+
+const { Text } = Typography;
 
 const UserList = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
   const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   const [editableUserId, setEditableUserId] = useState(null);
   const [editableUserName, setEditableUserName] = useState("");
   const [editableUserEmail, setEditableUserEmail] = useState("");
-
-  const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     refetch();
   }, [refetch]);
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm("Are you sure?")) {
       try {
         await deleteUser(id);
         refetch();
@@ -45,11 +42,7 @@ const UserList = () => {
 
   const updateHandler = async (id) => {
     try {
-      await updateUser({
-        userId: id,
-        username: editableUserName,
-        email: editableUserEmail,
-      });
+      await updateUser({ userId: id, username: editableUserName, email: editableUserEmail });
       setEditableUserId(null);
       refetch();
     } catch (err) {
@@ -57,8 +50,81 @@ const UserList = () => {
     }
   };
 
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: '_id',
+      key: '_id',
+    },
+    {
+      title: 'NAME',
+      dataIndex: 'username',
+      key: 'username',
+      render: (text, record) => (
+        editableUserId === record._id ? (
+          <Input
+            value={editableUserName}
+            onChange={(e) => setEditableUserName(e.target.value)}
+            onPressEnter={() => updateHandler(record._id)}
+          />
+        ) : (
+          <Space>
+            <Text>{text}</Text>
+            <Button
+              icon={<FaEdit />}
+              onClick={() => toggleEdit(record._id, record.username, record.email)}
+            />
+          </Space>
+        )
+      ),
+    },
+    {
+      title: 'EMAIL',
+      dataIndex: 'email',
+      key: 'email',
+      render: (text, record) => (
+        editableUserId === record._id ? (
+          <Input
+            value={editableUserEmail}
+            onChange={(e) => setEditableUserEmail(e.target.value)}
+            onPressEnter={() => updateHandler(record._id)}
+          />
+        ) : (
+          <Space>
+            <Text>{text}</Text>
+            <Button
+              icon={<FaEdit />}
+              onClick={() => toggleEdit(record._id, record.username, record.email)}
+            />
+          </Space>
+        )
+      ),
+    },
+    {
+      title: 'ADMIN',
+      dataIndex: 'isAdmin',
+      key: 'isAdmin',
+      render: (text, record) => (
+        record.isAdmin ? <FaCheck style={{ color: "green" }} /> : <FaTimes style={{ color: "red" }} />
+      ),
+    },
+    {
+      title: '',
+      key: 'action',
+      render: (text, record) => (
+        !record.isAdmin && (
+          <Button
+            danger
+            icon={<FaTrash />}
+            onClick={() => deleteHandler(record._id)}
+          />
+        )
+      ),
+    },
+  ];
+
   return (
-    <div className="p-4">
+    <div className="p-16">
       <h1 className="text-2xl font-semibold mb-4">Users</h1>
       {isLoading ? (
         <Loader />
@@ -68,102 +134,14 @@ const UserList = () => {
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">
-          {/* <AdminMenu /> */}
-          <table className="w-full md:w-4/5 mx-auto">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left">ID</th>
-                <th className="px-4 py-2 text-left">NAME</th>
-                <th className="px-4 py-2 text-left">EMAIL</th>
-                <th className="px-4 py-2 text-left">ADMIN</th>
-                <th className="px-4 py-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td className="px-4 py-2">{user._id}</td>
-                  <td className="px-4 py-2">
-                    {editableUserId === user._id ? (
-                      <div className="flex items-center">
-                        <input
-                          type="text"
-                          value={editableUserName}
-                          onChange={(e) => setEditableUserName(e.target.value)}
-                          className="w-full p-2 border rounded-lg"
-                        />
-                        <button
-                          onClick={() => updateHandler(user._id)}
-                          className="ml-2 bg-blue-500 text-black py-2 px-4 rounded-lg"
-                        >
-                          <FaCheck />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex items-center">
-                        {user.username}{" "}
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.username, user.email)
-                          }
-                        >
-                          <FaEdit className="ml-[1rem]" />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    {editableUserId === user._id ? (
-                      <div className="flex items-center">
-                        <input
-                          type="text"
-                          value={editableUserEmail}
-                          onChange={(e) => setEditableUserEmail(e.target.value)}
-                          className="w-full p-2 border rounded-lg"
-                        />
-                        <button
-                          onClick={() => updateHandler(user._id)}
-                          className="ml-2 bg-blue-500 text-black py-2 px-4 rounded-lg"
-                        >
-                          <FaCheck />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex items-center">
-                        <a href={`mailto:${user.email}`}>{user.email}</a>{" "}
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.name, user.email)
-                          }
-                        >
-                          <FaEdit className="ml-[1rem]" />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    {user.isAdmin ? (
-                      <FaCheck style={{ color: "green" }} />
-                    ) : (
-                      <FaTimes style={{ color: "red" }} />
-                    )}
-                  </td>
-                  <td className="px-4 py-2">
-                    {!user.isAdmin && (
-                      <div className="flex">
-                        <button
-                          onClick={() => deleteHandler(user._id)}
-                          className="bg-red-600 hover:bg-red-700 text-black font-bold py-2 px-4 rounded"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <AdminMenu />
+          <Table
+            className="w-full md:w-4/5 mx-auto"
+            dataSource={users}
+            columns={columns}
+            rowKey="_id"
+            pagination={{ pageSize: 10 }}
+          />
         </div>
       )}
     </div>

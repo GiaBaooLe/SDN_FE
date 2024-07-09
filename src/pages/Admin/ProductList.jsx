@@ -6,17 +6,14 @@ import {
 } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
+import { Button, Input, Form, Upload, Select, Row, Col } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import AdminMenu from "./AdminMenu";
+
+const { TextArea } = Input;
 
 const ProductList = () => {
   const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [brand, setBrand] = useState("");
-  const [stock, setStock] = useState(0);
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
@@ -24,37 +21,35 @@ const ProductList = () => {
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values) => {
     try {
       const productData = new FormData();
       productData.append("image", image);
-      productData.append("name", name);
-      productData.append("description", description);
-      productData.append("price", price);
-      productData.append("category", category);
-      productData.append("quantity", quantity);
-      productData.append("brand", brand);
-      productData.append("countInStock", stock);
+      productData.append("name", values.name);
+      productData.append("description", values.description);
+      productData.append("price", values.price);
+      productData.append("category", values.category);
+      productData.append("quantity", values.quantity);
+      productData.append("brand", values.brand);
+      productData.append("countInStock", values.stock);
 
       const { data } = await createProduct(productData);
 
       if (data.error) {
-        toast.error("Product create failed. Try Again.");
+        toast.error("Product creation failed. Try Again.");
       } else {
         toast.success(`${data.name} is created`);
         navigate("/");
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product create failed. Try Again.");
+      toast.error("Product creation failed. Try Again.");
     }
   };
 
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = async ({ file }) => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    formData.append("image", file);
 
     try {
       const res = await uploadProductImage(formData).unwrap();
@@ -71,7 +66,7 @@ const ProductList = () => {
       <div className="flex flex-col md:flex-row">
         <AdminMenu />
         <div className="md:w-3/4 p-3">
-          <div className="h-12">Create Product</div>
+          <h1 className="text-4xl font-bold">Create Product</h1>
 
           {imageUrl && (
             <div className="text-center">
@@ -83,106 +78,106 @@ const ProductList = () => {
             </div>
           )}
 
-          <div className="mb-3">
-            <label className="border text-black px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
-              {image ? image.name : "Upload Image"}
+          <Form
+            layout="vertical"
+            onFinish={handleSubmit}
+            initialValues={{ stock: 0 }}
+          >
+            <Form.Item label="Upload Image">
+              <Upload
+                customRequest={uploadFileHandler}
+                listType="picture"
+                showUploadList={false}
+              >
+                <Button icon={<UploadOutlined />}>
+                  {image ? image.name : "Upload Image"}
+                </Button>
+              </Upload>
+            </Form.Item>
 
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={uploadFileHandler}
-                className={!image ? "hidden" : "text-black"}
-              />
-            </label>
-          </div>
-
-          <div className="p-3">
-            <div className="flex flex-wrap">
-              <div className="one">
-                <label htmlFor="name">Name</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="two ml-10 ">
-                <label htmlFor="name block">Price</label> <br />
-                <input
-                  type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap">
-              <div className="one">
-                <label htmlFor="name block">Quantity</label> <br />
-                <input
-                  type="number"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
-              </div>
-              <div className="two ml-10 ">
-                <label htmlFor="name block">Brand</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <label htmlFor="" className="my-5">
-              Description
-            </label>
-            <textarea
-              type="text"
-              className="p-2 mb-3 bg-[#101011] border rounded-lg w-[95%] text-black"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-
-            <div className="flex justify-between">
-              <div>
-                <label htmlFor="name block">Count In Stock</label> <br />
-                <input
-                  type="text"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  value={stock}
-                  onChange={(e) => setStock(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="">Category</label> <br />
-                <select
-                  placeholder="Choose Category"
-                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-black"
-                  onChange={(e) => setCategory(e.target.value)}
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  rules={[{ required: true, message: "Please input the name!" }]}
                 >
-                  {categories?.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Price"
+                  name="price"
+                  rules={[{ required: true, message: "Please input the price!" }]}
+                >
+                  <Input type="number" />
+                </Form.Item>
+              </Col>
+            </Row>
 
-            <button
-              onClick={handleSubmit}
-              className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-600"
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Quantity"
+                  name="quantity"
+                  rules={[{ required: true, message: "Please input the quantity!" }]}
+                >
+                  <Input type="number" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Brand"
+                  name="brand"
+                  rules={[{ required: true, message: "Please input the brand!" }]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item
+              label="Description"
+              name="description"
+              rules={[{ required: true, message: "Please input the description!" }]}
             >
-              Submit
-            </button>
-          </div>
+              <TextArea rows={4} />
+            </Form.Item>
+
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Count In Stock"
+                  name="stock"
+                  rules={[{ required: true, message: "Please input the stock!" }]}
+                >
+                  <Input type="number" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Category"
+                  name="category"
+                  rules={[{ required: true, message: "Please select a category!" }]}
+                >
+                  <Select placeholder="Select a category">
+                    {categories?.map((c) => (
+                      <Select.Option key={c._id} value={c._id}>
+                        {c.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item>
+              <Button className="bg-pink-600 hover:bg-pink-700 text-white" htmlType="submit" block>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     </div>
