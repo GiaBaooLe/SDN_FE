@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetFilteredProductsQuery } from "../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
-
 import {
   setCategories,
   setProducts,
@@ -13,6 +12,7 @@ import ProductCard from "./Products/ProductCard";
 
 const Shop = () => {
   const dispatch = useDispatch();
+
   const { categories, products, checked, radio } = useSelector(
     (state) => state.shop
   );
@@ -84,15 +84,15 @@ const Shop = () => {
     <>
       <div className="container mx-auto">
         <div className="flex md:flex-row">
-          <div className="bg-[#151515] p-3 mt-2 mb-2">
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
+          <div className="bg-white text-pink-600 p-3 mt-2 mb-2 shadow-lg rounded-lg">
+            <h2 className="h4 text-center py-2 bg-pink-600 text-white rounded-full mb-2">
               Filter by Categories
             </h2>
 
             <div className="p-5 w-[15rem]">
               {categories?.map((c) => (
                 <div key={c._id} className="mb-2">
-                  <div className="flex ietms-center mr-4">
+                  <div className="flex items-center mr-4">
                     <input
                       type="checkbox"
                       id="red-checkbox"
@@ -102,7 +102,7 @@ const Shop = () => {
 
                     <label
                       htmlFor="pink-checkbox"
-                      className="ml-2 text-sm font-medium text-black dark:text-gray-300"
+                      className="ml-2 text-sm font-medium text-pink-600"
                     >
                       {c.name}
                     </label>
@@ -111,14 +111,14 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
+            <h2 className="h4 text-center py-2 bg-pink-600 text-white rounded-full mb-2">
               Filter by Brands
             </h2>
 
             <div className="p-5">
               {uniqueBrands?.map((brand) => (
                 <>
-                  <div className="flex items-enter mr-4 mb-5">
+                  <div className="flex items-center mr-4 mb-5">
                     <input
                       type="radio"
                       id={brand}
@@ -129,7 +129,7 @@ const Shop = () => {
 
                     <label
                       htmlFor="pink-radio"
-                      className="ml-2 text-sm font-medium text-black dark:text-gray-300"
+                      className="ml-2 text-sm font-medium text-pink-600"
                     >
                       {brand}
                     </label>
@@ -138,8 +138,8 @@ const Shop = () => {
               ))}
             </div>
 
-            <h2 className="h4 text-center py-2 bg-black rounded-full mb-2">
-              Filer by Price
+            <h2 className="h4 text-center py-2 bg-pink-600 text-white rounded-full mb-2">
+              Filter by Price
             </h2>
 
             <div className="p-5 w-[15rem]">
@@ -154,7 +154,7 @@ const Shop = () => {
 
             <div className="p-5 pt-0">
               <button
-                className="w-full border my-4"
+                className="w-full border my-4 bg-pink-600 text-white rounded-full py-2"
                 onClick={() => window.location.reload()}
               >
                 Reset
