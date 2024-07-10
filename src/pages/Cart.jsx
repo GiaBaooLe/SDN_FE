@@ -24,7 +24,21 @@ const Cart = () => {
 
   return (
     <>
-      <div className="container flex justify-around items-start flex wrap mx-auto mt-8">
+     <div className="top-banner">
+            <img
+              className="top-banner-image"
+              src="/src/assets/banner.png"
+              alt="banner"
+            />
+            <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
+              <img
+                className="t logo"
+                src="/src/assets/logo-concung.png"
+                alt="logo"
+              />
+            </div>
+          </div>
+      <div className="container flex justify-around items-start flex wrap mx-auto mt-44">
         {cartItems.length === 0 ? (
           <div>
             Your cart is empty <Link to="/shop">Go To Shop</Link>

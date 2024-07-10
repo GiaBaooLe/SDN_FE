@@ -66,12 +66,12 @@ const ManageBlog = () => {
   if (isError) return <Alert message="Error fetching blogs" type="error" />;
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="mx-20 px-4 py-6 ">
       <Title level={1} className="text-2xl font-bold mb-4 text-center">Manage Blog Posts</Title>
       <Button
         type="primary"
         onClick={() => showModal("create")}
-        className="mb-4"
+        className="mb-4 bg-pink-400"
       >
         Create New Blog Post
       </Button>
@@ -82,12 +82,14 @@ const ManageBlog = () => {
             cover={<img src={blog.image} alt={blog.title} className="object-cover h-40 w-full" />}
             actions={[
               <Button
+              className="bg-pink-400 text-white font-semibold"
                 type="link"
                 onClick={() => showModal("edit", blog)}
               >
                 Edit
               </Button>,
               <Button
+              className="text-pink-400 font-semibold"
                 type="link"
                 onClick={() => handleDeleteBlog(blog._id)}
                 loading={isDeleting}
@@ -132,6 +134,7 @@ const ManageBlog = () => {
               type="primary"
               htmlType="submit"
               loading={isCreating || isUpdating}
+              className="bg-pink-400"
             >
               {modalType === "create" ? "Create Blog" : "Update Blog"}
             </Button>
