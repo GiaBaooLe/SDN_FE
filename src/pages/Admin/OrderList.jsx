@@ -9,6 +9,7 @@ const OrderList = () => {
 
   return (
     <>
+    <div className="flex justify-center text-4xl font-bold">Order List</div>
       {isLoading ? (
         <Loader />
       ) : error ? (

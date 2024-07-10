@@ -8,7 +8,7 @@ import Message from "../../components/Message";
 import { FaBox, FaClock, FaShoppingCart, FaStore } from "react-icons/fa";
 import moment from "moment";
 import HeartIcon from "./HeartIcon";
-import Ratings from "./Ratings";
+
 import ProductTabs from "./ProductTabs";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { Button, Typography, Select } from "antd";
@@ -50,6 +50,20 @@ const ProductDetails = () => {
 
   return (
     <>
+    <div className="top-banner">
+            <img
+              className="top-banner-image"
+              src="/src/assets/banner.png"
+              alt="banner"
+            />
+            <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
+              <img
+                className="t logo"
+                src="/src/assets/logo-concung.png"
+                alt="logo"
+              />
+            </div>
+          </div>
       <div className="my-4">
         <Link to="/" className="text-blue-500 hover:underline">
           Go Back

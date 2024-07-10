@@ -65,6 +65,7 @@ const Product = () => {
 
   return (
     <>
+    
       <div>
         <Link
           className="text-black font-semibold hover:underline ml-[10rem]"

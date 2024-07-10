@@ -126,7 +126,7 @@ const AdminDashboard = () => {
           </Col>
         </Row>
 
-        <div className="bg-white p-5 rounded-lg">
+        <div className="bg-pink-200 p-12 rounded-lg">
           <Chart
             options={state.options}
             series={state.series}

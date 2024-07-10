@@ -25,7 +25,7 @@ const ProductTabs = ({
   }, [userInfo, setRating, setComment]);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-white p-6 rounded-lg shadow-md px-28">
       <Title level={2} className="mb-4">Reviews</Title>
       {product.reviews.length === 0 && <Alert message="No Reviews" type="info" showIcon />}
       <ul className="mb-6">

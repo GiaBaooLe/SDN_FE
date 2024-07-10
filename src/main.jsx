@@ -76,6 +76,7 @@ const router = createBrowserRouter(
         <Route path="dashboard" element={<AdminDashboard />} />
       </Route>
     </Route>
+    
   )
 );
 

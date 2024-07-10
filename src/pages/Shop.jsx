@@ -86,8 +86,25 @@ const Shop = () => {
 
   return (
     <>
-      <div className="container mx-auto">
-        <SearchBar onSearch={handleSearch} /> {/* Include the SearchBar component */}
+     <div className="top-banner">
+            <img
+              className="top-banner-image"
+              src="/src/assets/banner.png"
+              alt="banner"
+            />
+            <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
+              <img
+                className="t logo"
+                src="/src/assets/logo-concung.png"
+                alt="logo"
+              />
+            </div>
+          </div>
+      <div className="container px-16 mt-44">
+      <div className="mx-4">
+          <SearchBar onSearch={handleSearch} /> 
+      </div>
+      {/* Include the SearchBar component */}
         <div className="flex md:flex-row">
           <div className="bg-white text-pink-600 p-3 mt-2 mb-2 shadow-lg rounded-lg">
             <h2 className="h4 text-center py-2 bg-pink-600 text-white rounded-full mb-2">
