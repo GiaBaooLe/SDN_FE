@@ -6,9 +6,9 @@
 }
 
 .logo-container {
-  display: flex; /* Added this line */
-  justify-content: center; /* Added this line */
-  align-items: center; /* Added this line */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
   margin-top: 20px;
 }
 
@@ -19,11 +19,14 @@
 
 .carousel {
   margin-top: 20px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 95%;
+  margin-left: 75px;
   border-radius: 10px;
   overflow: hidden;
+}
+
+.carousel .slick-dots {
+  display: none;
 }
 
 .carousel-image {
@@ -52,13 +55,6 @@
   text-decoration: none;
 }
 
-.special-products {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 20px;
-}
-
 .products-container {
   margin-top: 40px;
 }
@@ -72,3 +68,5 @@
 .product-item {
   margin: 10px;
 }
+
+

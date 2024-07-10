@@ -5,9 +5,16 @@ import Message from "../components/Message";
 import Header from "../components/Header";
 import Product from "./Products/Product";
 import React from "react";
-import { Carousel } from "antd";
-import { Card } from "antd";
-import "./Home.css"; 
+import { Carousel, Card, Button, Row, Col } from "antd";
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  SettingOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
+import "./Home.css";
+
+const { Meta } = Card;
 
 const Home = () => {
   const { keyword } = useParams();
@@ -16,8 +23,6 @@ const Home = () => {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
-
-  const { Meta } = Card;
 
   return (
     <>
@@ -38,7 +43,15 @@ const Home = () => {
             />
           </div>
 
-          <div className="logo-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '90px' }}>
+          <div
+            className="logo-container"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "90px",
+            }}
+          >
             <img
               className="logo"
               src="/src/assets/logo-concung.png"
@@ -77,13 +90,6 @@ const Home = () => {
             </div>
             <div>
               <img
-                src="/src/assets/carousel-5.png"
-                alt="carousel-5"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
                 src="/src/assets/carousel-6.png"
                 alt="carousel-6"
                 className="carousel-image"
@@ -105,77 +111,64 @@ const Home = () => {
             </div>
           </Carousel>
 
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
+            <Card
+              hoverable
+              style={{ width: 480, margin: 20 }}
+              cover={<img src="/src/assets/review.png" alt="review" />}
+            >
+              <div style={{ marginTop: "10px" }}>
+                <Row gutter={[16, 16]}>
+                  <Col span={8} style={{ textAlign: "left" }}>
+                    <div>
+                      <CheckCircleOutlined /> Content 1
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 2
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 3
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ textAlign: "right" }}>
+                    <div>
+                      <CheckCircleOutlined /> Content 4
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 5
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 6
+                    </div>
+                  </Col>
+                  <Col span={8} style={{ textAlign: "right" }}>
+                    <div>
+                      <CheckCircleOutlined /> Content 7
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 8
+                    </div>
+                    <div>
+                      <CheckCircleOutlined /> Content 9
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Card>
+          </div>
+
           <div className="special-products-header">
             <h1 className="special-products-title">Special Products</h1>
             <Link to="/shop" className="shop-link">
               Shop
             </Link>
-          </div>
-
-          <div className="special-products">
-            <Card
-              hoverable
-              style={{ width: 240, margin: 10 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-
-            <Card
-              hoverable
-              style={{ width: 240, margin: 10 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-
-            <Card
-              hoverable
-              style={{ width: 240, margin: 10 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
-
-            <Card
-              hoverable
-              style={{ width: 240, margin: 10 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
-            >
-              <Meta
-                title="Europe Street beat"
-                description="www.instagram.com"
-              />
-            </Card>
           </div>
 
           <div className="products-container">
