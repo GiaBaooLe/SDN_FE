@@ -77,6 +77,17 @@ const AdminMenu = () => {
             <li>
               <NavLink
                 className="list-item py-2 px-3 block mb-5 hover:bg-pink-600 rounded-sm"
+                to="/admin/bloglist"
+                style={({ isActive }) => ({
+                  color: isActive ? "pink" : "white",
+                })}
+              >
+                Manage Blogs
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="list-item py-2 px-3 block mb-5 hover:bg-pink-600 rounded-sm"
                 to="/admin/userlist"
                 style={({ isActive }) => ({
                   color: isActive ? "pink" : "white",

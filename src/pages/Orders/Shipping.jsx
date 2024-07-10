@@ -44,7 +44,7 @@ const Shipping = () => {
         <form onSubmit={submitHandler} className="w-[40rem]">
           <h1 className="text-2xl font-semibold mb-4">Shipping</h1>
           <div className="mb-4">
-            <label className="block text-black mb-2">Address</label>
+            <label className="block text-white mb-2">Address</label>
             <input
               type="text"
               className="w-full p-2 border rounded"
@@ -55,7 +55,7 @@ const Shipping = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black mb-2">City</label>
+            <label className="block text-white mb-2">City</label>
             <input
               type="text"
               className="w-full p-2 border rounded"
@@ -66,7 +66,7 @@ const Shipping = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black mb-2">Postal Code</label>
+            <label className="block text-white mb-2">Postal Code</label>
             <input
               type="text"
               className="w-full p-2 border rounded"
@@ -77,7 +77,7 @@ const Shipping = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-black mb-2">Country</label>
+            <label className="block text-white mb-2">Country</label>
             <input
               type="text"
               className="w-full p-2 border rounded"
@@ -106,7 +106,7 @@ const Shipping = () => {
           </div>
 
           <button
-            className="bg-pink-500 text-black py-2 px-4 rounded-full text-lg w-full"
+            className="bg-pink-500 text-white py-2 px-4 rounded-full text-lg w-full"
             type="submit"
           >
             Continue

@@ -1,0 +1,29 @@
+/* src/pages/Blog/Blog.css */
+.container {
+    padding: 20px;
+  }
+  
+  .blog-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .blog-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .blog-form {
+    margin-bottom: 20px;
+  }
+  
+  .blog-form input,
+  .blog-form textarea {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  

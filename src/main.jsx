@@ -12,29 +12,34 @@ import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 
+// Admin Route
 import AdminRoute from "./pages/Admin/AdminRoute";
+
+import Blog from "./pages/Blog/Blog.jsx";
+import BlogDetail from "./pages/Blog/BlogDetail.jsx";
+
+// Admin Pages
 import Profile from "./pages/User/Profile";
 import UserList from "./pages/Admin/UserList";
-
 import CategoryList from "./pages/Admin/CategoryList";
-
 import ProductList from "./pages/Admin/ProductList";
 import AllProducts from "./pages/Admin/AllProducts";
 import ProductUpdate from "./pages/Admin/ProductUpdate";
+import OrderList from "./pages/Admin/OrderList.jsx";
+import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
 
+// User Pages
 import Home from "./pages/Home.jsx";
 import Favorites from "./pages/Products/Favorites.jsx";
 import ProductDetails from "./pages/Products/ProductDetails.jsx";
-
 import Cart from "./pages/Cart.jsx";
 import Shop from "./pages/Shop.jsx";
-
 import Shipping from "./pages/Orders/Shipping.jsx";
 import PlaceOrder from "./pages/Orders/PlaceOrder.jsx";
 import Order from "./pages/Orders/Order.jsx";
-import OrderList from "./pages/Admin/OrderList.jsx";
+import ManageBlog from "./pages/Admin/ManageBlog.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import AdminDashboard from "./pages/Admin/AdminDashboard.jsx";
+import UserOrder from "./pages/User/UserOrder.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +51,9 @@ const router = createBrowserRouter(
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/user-orders" element={<UserOrder />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:id" element={<BlogDetail />} />
 
       {/* Registered users */}
       <Route path="" element={<PrivateRoute />}>
@@ -63,6 +71,8 @@ const router = createBrowserRouter(
         <Route path="productlist/:pageNumber" element={<ProductList />} />
         <Route path="product/update/:_id" element={<ProductUpdate />} />
         <Route path="orderlist" element={<OrderList />} />
+        <Route path="manageblog" element={<ManageBlog />} />
+       
         <Route path="dashboard" element={<AdminDashboard />} />
       </Route>
     </Route>
@@ -71,8 +81,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <PayPalScriptProvider>
-      <RouterProvider router={router} />
-    </PayPalScriptProvider>
-  </Provider>
+  <PayPalScriptProvider>
+    <RouterProvider router={router} />
+  </PayPalScriptProvider>
+</Provider>
 );
