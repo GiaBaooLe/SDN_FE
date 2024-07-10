@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .logo-container {
@@ -19,8 +19,8 @@
 
 .carousel {
   margin-top: 20px;
-  width: 95%;
-  margin-left: 75px;
+  width: 98%;
+  margin-left: 18px;
   border-radius: 10px;
   overflow: hidden;
 }
