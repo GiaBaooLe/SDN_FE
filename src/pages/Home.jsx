@@ -25,24 +25,7 @@ const Home = () => {
   };
   return (
     <>
-      {!keyword ? <Header /> : null}
-      {isLoading ? (
-        <Loader />
-      ) : isError ? (
-        <Message variant="danger">
-          {isError?.data.message || isError.error}
-        </Message>
-      ) : (
-        <>
-          <div className="top-banner">
-            <img
-              className="top-banner-image"
-              src="/src/assets/banner.png"
-              alt="banner"
-            />
-          </div>
-
-          <div
+    <div
             className="logo-container"
             style={{
               display: "flex",
@@ -108,12 +91,30 @@ const Home = () => {
               />
             </div>
           </Carousel>
+      {!keyword ? <Header /> : null}
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <Message variant="danger">
+          {isError?.data.message || isError.error}
+        </Message>
+      ) : (
+        <>
+          <div className="top-banner">
+            <img
+              className="top-banner-image"
+              src="/src/assets/banner.png"
+              alt="banner"
+            />
+          </div>
+
+          
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: "20px",
+              marginTop: "30px",
             }}
           >
             <Card
