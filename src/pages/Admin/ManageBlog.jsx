@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { useFetchBlogsQuery, useCreateBlogMutation, useUpdateBlogMutation, useDeleteBlogMutation } from "../../redux/api/blogApiSlice";
-import { Button, Form, Input, Modal, Card, message, Typography, Skeleton, Alert } from "antd";
+import { useAllProductsQuery } from "../../redux/api/productApiSlice";
+import { Button, Form, Input, Modal, Card, message, Typography, Skeleton, Alert, Select } from "antd";
 
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
 
 const ManageBlog = () => {
-  const { data: blogs = [], isLoading, isError } = useFetchBlogsQuery();
+  const { data: blogs = [], isLoading: isBlogsLoading, isError: isBlogsError } = useFetchBlogsQuery();
+  const { data: productsData = [], isLoading: isProductsLoading, isError: isProductsError } = useAllProductsQuery();
+
+  console.log("Products Data:", productsData); // Check if products data is fetched correctly
+
   const [createBlog, { isLoading: isCreating }] = useCreateBlogMutation();
   const [updateBlog, { isLoading: isUpdating }] = useUpdateBlogMutation();
   const [deleteBlog, { isLoading: isDeleting }] = useDeleteBlogMutation();
 
   const [form] = Form.useForm();
   const [editBlogId, setEditBlogId] = useState(null);
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState("create"); // "create" or "edit"
 
@@ -25,6 +30,7 @@ const ManageBlog = () => {
         title: blog.title,
         image: blog.image,
         description: blog.description,
+        relatedProducts: blog.relatedProducts ? blog.relatedProducts.map(p => p._id) : [],
       });
     } else {
       setEditBlogId(null);
@@ -62,48 +68,30 @@ const ManageBlog = () => {
     }
   };
 
-  if (isLoading) return <Skeleton active />;
-  if (isError) return <Alert message="Error fetching blogs" type="error" />;
+  if (isBlogsLoading || isProductsLoading) return <Skeleton active />;
+  if (isBlogsError) return <Alert message="Error fetching blogs" type="error" />;
+  if (isProductsError) return <Alert message="Error fetching products" type="error" />;
+
+  const products = Array.isArray(productsData) ? productsData : [];
 
   return (
-    <div className="mx-20 px-4 py-6 ">
+    <div className="mx-20 px-4 py-6">
       <Title level={1} className="text-2xl font-bold mb-4 text-center">Manage Blog Posts</Title>
-      <Button
-        type="primary"
-        onClick={() => showModal("create")}
-        className="mb-4 bg-pink-400"
-      >
-        Create New Blog Post
-      </Button>
+      <Button type="primary" onClick={() => showModal("create")} className="mb-4 bg-pink-400">Create New Blog Post</Button>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {blogs.map((blog) => (
           <Card
             key={blog._id}
             cover={<img src={blog.image} alt={blog.title} className="object-cover h-40 w-full" />}
             actions={[
-              <Button
-              className="bg-pink-400 text-white font-semibold"
-                type="link"
-                onClick={() => showModal("edit", blog)}
-              >
-                Edit
-              </Button>,
-              <Button
-              className="text-pink-400 font-semibold"
-                type="link"
-                onClick={() => handleDeleteBlog(blog._id)}
-                loading={isDeleting}
-              >
-                Delete
-              </Button>,
+              <Button className="bg-pink-400 text-white font-semibold" type="link" onClick={() => showModal("edit", blog)}>Edit</Button>,
+              <Button className="text-pink-400 font-semibold" type="link" onClick={() => handleDeleteBlog(blog._id)} loading={isDeleting}>Delete</Button>,
             ]}
             className="shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <Title level={4} className="text-lg">{blog.title}</Title>
             <Paragraph>{blog.description.substring(0, 100)}...</Paragraph>
-            <Paragraph className="text-gray-500 text-sm">
-              Created at: {new Date(blog.createdAt).toLocaleDateString()} {new Date(blog.createdAt).toLocaleTimeString()}
-            </Paragraph>
+            <Paragraph className="text-gray-500 text-sm">Created at: {new Date(blog.createdAt).toLocaleDateString()} {new Date(blog.createdAt).toLocaleTimeString()}</Paragraph>
           </Card>
         ))}
       </div>
@@ -118,7 +106,7 @@ const ManageBlog = () => {
         <Form
           form={form}
           onFinish={handleCreateOrUpdateBlog}
-          initialValues={{ title: '', image: '', description: '' }}
+          initialValues={{ title: '', image: '', description: '', relatedProducts: [] }}
         >
           <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please enter the title!' }]}>
             <Input placeholder="Title" />
@@ -129,13 +117,17 @@ const ManageBlog = () => {
           <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Please enter the description!' }]}>
             <TextArea rows={4} placeholder="Description" />
           </Form.Item>
+          <Form.Item name="relatedProducts" label="Related Products">
+            <Select mode="multiple" placeholder="Select related products">
+              {products.map((product) => (
+                <Option key={product._id} value={product._id}>
+                  {product.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={isCreating || isUpdating}
-              className="bg-pink-400"
-            >
+            <Button type="primary" htmlType="submit" loading={isCreating || isUpdating} className="bg-pink-400">
               {modalType === "create" ? "Create Blog" : "Update Blog"}
             </Button>
           </Form.Item>
