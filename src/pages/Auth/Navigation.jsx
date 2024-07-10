@@ -5,6 +5,7 @@ import {
   AiOutlineLogin,
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
+  AiFillBook,
 } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -56,6 +57,13 @@ const Navigation = () => {
         >
           <AiOutlineHome className="mr-2 mt-[3rem]" size={26} />
           <span className="hidden nav-item-name mt-[3rem]">HOME</span>{" "}
+        </Link>
+        <Link
+          to="/blog"
+          className="flex items-center transition-transform transform hover:translate-x-2"
+        >
+          <AiFillBook className="mr-2 mt-[3rem]" size={26} />
+          <span className="hidden nav-item-name mt-[3rem]">BLOG</span>{" "}
         </Link>
 
         <Link
@@ -138,6 +146,14 @@ const Navigation = () => {
                     className="block px-4 py-2 hover:bg-pink-500"
                   >
                     Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/admin/manageblog"
+                    className="block px-4 py-2 hover:bg-pink-500"
+                  >
+                    Blog
                   </Link>
                 </li>
                 <li>
