@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/Loader";
 import { useRegisterMutation } from "../../redux/api/usersApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [username, setName] = useState("");
@@ -15,7 +15,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -42,21 +42,22 @@ const Register = () => {
         toast.success("User successfully registered");
       } catch (err) {
         console.log(err);
-        toast.error(err.data.message);
+        toast.error(err?.data?.message || "Registration failed");
       }
     }
   };
 
   return (
-    <section className="pl-[10rem] flex flex-wrap">
-      <div className="mr-[4rem] mt-[5rem]">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <ToastContainer />
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-semibold mb-4">Register</h1>
 
-        <form onSubmit={submitHandler} className="container w-[40rem]">
-          <div className="my-[2rem]">
+        <form onSubmit={submitHandler}>
+          <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-black"
+              className="block text-sm font-medium text-gray-700"
             >
               Name
             </label>
@@ -67,13 +68,14 @@ const Register = () => {
               placeholder="Enter name"
               value={username}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
-          <div className="my-[2rem]">
+          <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-black"
+              className="block text-sm font-medium text-gray-700"
             >
               Email Address
             </label>
@@ -84,13 +86,14 @@ const Register = () => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
-          <div className="my-[2rem]">
+          <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-black"
+              className="block text-sm font-medium text-gray-700"
             >
               Password
             </label>
@@ -101,13 +104,14 @@ const Register = () => {
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
-          <div className="my-[2rem]">
+          <div className="mb-6">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-black"
+              className="block text-sm font-medium text-gray-700"
             >
               Confirm Password
             </label>
@@ -118,22 +122,20 @@ const Register = () => {
               placeholder="Confirm password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </div>
 
           <button
-            disabled={isLoading}
             type="submit"
-            className="bg-pink-500 text-black px-4 py-2 rounded cursor-pointer my-[1rem]"
+            className="w-full bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition duration-200"
           >
-            {isLoading ? "Registering..." : "Register"}
+            Register
           </button>
-
-          {isLoading && <Loader />}
         </form>
 
-        <div className="mt-4">
-          <p className="text-black">
+        <div className="mt-4 text-center">
+          <p className="text-gray-700">
             Already have an account?{" "}
             <Link
               to={redirect ? `/login?redirect=${redirect}` : "/login"}
@@ -144,8 +146,7 @@ const Register = () => {
           </p>
         </div>
       </div>
-      
-    </section>
+    </div>
   );
 };
 
