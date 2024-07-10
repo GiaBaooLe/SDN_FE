@@ -20,7 +20,7 @@
 .carousel {
   margin-top: 20px;
   width: 98%;
-  margin-left: 18px;
+  margin-left: 17px;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -69,4 +69,51 @@
   margin: 10px;
 }
 
+.container_2 {
+  margin-top: 150px;
+}
+
+/* ProductCard.css */
+.product-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  margin: 20px;
+  position: relative;
+}
+
+.product-card-image-container {
+  position: relative;
+}
+
+.product-card-image {
+  width: 100%;
+  height: auto;
+}
+
+.product-card-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ff69b4;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.product-card-info {
+  padding: 10px;
+}
+
+.product-card-title {
+  font-size: 1em;
+  color: #333;
+}
+
+.product-card-price {
+  font-size: 1.2em;
+  color: #b8006e;
+  font-weight: bold;
+}
 

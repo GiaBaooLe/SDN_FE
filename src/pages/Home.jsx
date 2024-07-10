@@ -242,147 +242,147 @@ const Home = () => {
             </div>
           </div>
 
-          <div
-            className="logo-container"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <img
-              className="logo"
-              src="/src/assets/logo-concung.png"
-              alt="logo"
-            />
-          </div>
-
-          <Carousel afterChange={onChange} className="carousel">
-            <div>
-              <img
-                src="/src/assets/carousel-1.png"
-                alt="carousel-1"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-2.png"
-                alt="carousel-2"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-3.png"
-                alt="carousel-3"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-4.png"
-                alt="carousel-4"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-6.png"
-                alt="carousel-6"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-7.png"
-                alt="carousel-7"
-                className="carousel-image"
-              />
-            </div>
-            <div>
-              <img
-                src="/src/assets/carousel-8.png"
-                alt="carousel-8"
-                className="carousel-image"
-              />
-            </div>
-          </Carousel>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <Card
-              hoverable
-              style={{ width: 480, margin: 20 }}
-              cover={<img src="/src/assets/review.png" alt="review" />}
+          <div className="container_2">
+            {/* Logo */}
+            <div
+              className="logo-container"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "20px",
+              }}
             >
-              <div style={{ marginTop: "10px" }}>
-                <Row gutter={[16, 16]}>
-                  <Col span={8} style={{ textAlign: "left" }}>
-                    <div>
-                      <CheckCircleOutlined /> Content 1
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 2
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 3
-                    </div>
-                  </Col>
-                  <Col span={8} style={{ textAlign: "right" }}>
-                    <div>
-                      <CheckCircleOutlined /> Content 4
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 5
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 6
-                    </div>
-                  </Col>
-                  <Col span={8} style={{ textAlign: "right" }}>
-                    <div>
-                      <CheckCircleOutlined /> Content 7
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 8
-                    </div>
-                    <div>
-                      <CheckCircleOutlined /> Content 9
-                    </div>
-                  </Col>
-                </Row>
+              <img
+                className="logo"
+                src="/src/assets/logo-concung.png"
+                alt="logo"
+              />
+            </div>
+
+            <Carousel afterChange={onChange} className="carousel">
+              <div>
+                <img
+                  src="/src/assets/carousel-1.png"
+                  alt="carousel-1"
+                  className="carousel-image"
+                />
               </div>
-            </Card>
-          </div>
+              <div>
+                <img
+                  src="/src/assets/carousel-2.png"
+                  alt="carousel-2"
+                  className="carousel-image"
+                />
+              </div>
+              <div>
+                <img
+                  src="/src/assets/carousel-3.png"
+                  alt="carousel-3"
+                  className="carousel-image"
+                />
+              </div>
+              <div>
+                <img
+                  src="/src/assets/carousel-4.png"
+                  alt="carousel-4"
+                  className="carousel-image"
+                />
+              </div>
+              <div>
+                <img
+                  src="/src/assets/carousel-6.png"
+                  alt="carousel-6"
+                  className="carousel-image"
+                />
+              </div>
+              <div>
+                <img
+                  src="/src/assets/carousel-8.png"
+                  alt="carousel-8"
+                  className="carousel-image"
+                />
+              </div>
+            </Carousel>
 
-          <div className="special-products-header">
-            <h1 className="special-products-title">Special Products</h1>
-            <Link to="/shop" className="shop-link">
-              Shop
-            </Link>
-          </div>
-
-          <div className="products-container">
-            <div className="products-grid">
-              {data.products.map((product) => (
-                <div key={product._id} className="product-item">
-                  <Product product={product} />
+            {/* Card */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "20px",
+              }}
+            >
+              <Card
+                hoverable
+                style={{ width: 480, margin: 20 }}
+                cover={<img src="/src/assets/review.png" alt="review" />}
+              >
+                <div style={{ marginTop: "10px" }}>
+                  <Row gutter={[16, 16]}>
+                    <Col span={8} style={{ textAlign: "left" }}>
+                      <div>
+                        <CheckCircleOutlined /> Content 1
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 2
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 3
+                      </div>
+                    </Col>
+                    <Col span={8} style={{ textAlign: "right" }}>
+                      <div>
+                        <CheckCircleOutlined /> Content 4
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 5
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 6
+                      </div>
+                    </Col>
+                    <Col span={8} style={{ textAlign: "right" }}>
+                      <div>
+                        <CheckCircleOutlined /> Content 7
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 8
+                      </div>
+                      <div>
+                        <CheckCircleOutlined /> Content 9
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
-              ))}
+              </Card>
+            </div>
+
+            <div className="special-products-header">
+              <h1 className="special-products-title">Special Products</h1>
+              <Link to="/shop" className="shop-link">
+                Shop
+              </Link>
+            </div>
+
+            <div className="product-card">
+              <div className="product-card-image-container">
+                <img
+                  src="/src/assets/pink-panther.png"
+                  className="product-card-image"
+                />
+              </div>
+              <div className="product-card-info">
+                <p className="product-card-title">asd</p>
+                <p className="product-card-price">adfcadf</p>
+              </div>
             </div>
           </div>
         </>
       )}
 
-      <Footer/>
+      <Footer />
     </>
   );
 };

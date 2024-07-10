@@ -1,11 +1,11 @@
 .navigation-horizontal {
   width: 100%;
   padding: 10px 0;
-  position: relative;
+  position: fixed;
   display: flex;
   margin-top: 60px;
   justify-content: space-between;
-  align-items: center;
+  z-index: 9999;
 }
 
 .nav-item-name {
