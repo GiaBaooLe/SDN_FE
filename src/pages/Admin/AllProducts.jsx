@@ -19,9 +19,17 @@ const AllProducts = () => {
   const handleDelete = async (id) => {
     Modal.confirm({
       title: "Are you sure you want to delete this product?",
+      okText: "Delete",
       onOk: async () => {
         await deleteProduct(id);
         refetch();
+      },
+      okButtonProps: {
+        style: {
+          backgroundColor: 'red',
+          color: '#ffffff',
+          borderColor: '#ff4d6c',
+        },
       },
     });
   };
@@ -58,7 +66,7 @@ const AllProducts = () => {
             <div className="ml-[2rem] text-xl font-bold h-12">
               All Products ({products.length})
             </div>
-            <button onClick={showCreateModal} className="btn btn-primary">Create Product</button>
+            <button onClick={showCreateModal} className="btn btn-primary bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">Create Product</button>
             <div className="flex flex-wrap justify-around items-center">
               {products.map((product) => (
                 <div key={product._id} className="block mb-4 overflow-hidden">
@@ -84,8 +92,8 @@ const AllProducts = () => {
                       </p>
 
                       <div className="flex justify-between">
-                        <button onClick={() => showUpdateModal(product)} className="btn btn-secondary bg-pink-600">Update</button>
-                        <button onClick={() => handleDelete(product._id)} className="btn btn-danger">Delete</button>
+                        <button onClick={() => showUpdateModal(product)} className="btn btn-secondary bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Update</button>
+                        <button onClick={() => handleDelete(product._id)} className="btn btn-danger bg-red-500 text-white rounded-full px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Delete</button>
                         <p>$ {product?.price}</p>
                       </div>
                     </div>

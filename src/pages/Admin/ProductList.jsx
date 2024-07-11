@@ -105,9 +105,9 @@ const CreateProductModal = ({ visible, onClose }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" block>
+          <button type="submit" className="bg-pink-500 text-white px-4 py-2 rounded-md block w-full">
             Submit
-          </Button>
+          </button>
         </Form.Item>
       </Form>
     </Modal>
