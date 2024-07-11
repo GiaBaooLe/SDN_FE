@@ -112,9 +112,9 @@ const UpdateProductModal = ({ visible, onClose, product }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button className="bg-pink-600" type="primary" htmlType="submit" block>
+          <button type="submit" className="bg-pink-500 text-white px-4 py-2 rounded-md block w-full">
             Update
-          </Button>
+          </button>
         </Form.Item>
       </Form>
     </Modal>
