@@ -103,9 +103,9 @@ const ProductDetails = () => {
                   <h1 className="flex items-center mb-2">
                     <FaStore className="mr-2 text-black" /> Ratings: {product.rating}
                   </h1>
-                  <h1 className="flex items-center mb-2">
+                  {/* <h1 className="flex items-center mb-2">
                     <FaShoppingCart className="mr-2 text-black" /> Quantity: {product.quantity}
-                  </h1>
+                  </h1> */}
                   <h1 className="flex items-center mb-2">
                     <FaBox className="mr-2 text-black" /> In Stock: {product.countInStock}
                   </h1>
