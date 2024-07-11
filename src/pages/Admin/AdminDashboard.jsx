@@ -81,7 +81,6 @@ const AdminDashboard = () => {
             categories: formattedSalesDate.map((item) => item.x),
           },
         },
-
         series: [
           { name: "Sales", data: formattedSalesDate.map((item) => item.y) },
         ],

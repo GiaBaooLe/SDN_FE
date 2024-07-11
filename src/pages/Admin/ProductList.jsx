@@ -33,17 +33,21 @@ const ProductList = () => {
       productData.append("brand", values.brand);
       productData.append("countInStock", values.stock);
 
-      const { data } = await createProduct(productData);
+      const result = await createProduct(productData).unwrap();
 
-      if (data.error) {
-        toast.error("Product creation failed. Try Again.");
+      if (result.error) {
+        toast.error(result.error);
       } else {
-        toast.success(`${data.name} is created`);
+        toast.success(`${result.name} is created`);
         navigate("/");
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product creation failed. Try Again.");
+      if (error?.data?.error) {
+        toast.error(error.data.error);
+      } else {
+        toast.error("Product creation failed. Try Again.");
+      }
     }
   };
 

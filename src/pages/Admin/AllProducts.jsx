@@ -20,7 +20,7 @@ const AllProducts = () => {
         <div className="flex flex-col  md:flex-row">
           <div className="p-3">
             <div className="ml-[2rem] text-xl font-bold h-12">
-              All Products ({products.length})
+              Manage Products ({products.length})
             </div>
             <div className="flex flex-wrap justify-around items-center">
               {products.map((product) => (
