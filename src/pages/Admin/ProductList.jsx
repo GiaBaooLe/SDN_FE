@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCreateProductMutation, useUploadProductImageMutation } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";  // Sử dụng useNavigate
 
 const { TextArea } = Input;
 
@@ -13,6 +14,7 @@ const CreateProductModal = ({ visible, onClose }) => {
   const [createProduct] = useCreateProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
   const { data: categories } = useFetchCategoriesQuery();
+  const navigate = useNavigate();  // Khởi tạo useNavigate
 
   const handleSubmit = async (values) => {
     try {
@@ -26,17 +28,22 @@ const CreateProductModal = ({ visible, onClose }) => {
       productData.append("brand", values.brand);
       productData.append("countInStock", values.stock);
 
-      const { data } = await createProduct(productData);
+      const result = await createProduct(productData).unwrap();
 
-      if (data.error) {
-        toast.error("Product creation failed. Try Again.");
+      if (result.error) {
+        toast.error(result.error);
       } else {
-        toast.success(`${data.name} is created`);
-        onClose();
+        toast.success(`${result.name} is created`);
+        onClose();  // Đóng modal
+        navigate("/admin/allproductslist");  // Chuyển hướng
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product creation failed. Try Again.");
+      if (error?.data?.error) {
+        toast.error(error.data.error);
+      } else {
+        toast.error("Product creation failed. Try Again.");
+      }
     }
   };
 

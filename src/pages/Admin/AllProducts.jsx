@@ -64,7 +64,7 @@ const AllProducts = () => {
         <div className="flex flex-col md:flex-row">
           <div className="p-3">
             <div className="ml-[2rem] text-xl font-bold h-12">
-              All Products ({products.length})
+              Manage Products ({products.length})
             </div>
             <button onClick={showCreateModal} className="btn btn-primary bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">Create Product</button>
             <div className="flex flex-wrap justify-around items-center">

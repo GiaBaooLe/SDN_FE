@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
@@ -5,21 +6,22 @@ import { useGetOrdersQuery } from "../../redux/api/orderApiSlice";
 import AdminMenu from "./AdminMenu";
 
 const OrderList = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
+  const { data: orders, isLoading, error, refetch } = useGetOrdersQuery();
+
+  useEffect(() => {
+    refetch();
+  }, [orders]);
 
   return (
     <>
-    <div className="flex justify-center text-4xl font-bold">Order List</div>
+      <div className="flex justify-center text-4xl font-bold">Order List</div>
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">
-          {error?.data?.message || error.error}
-        </Message>
+        <Message variant="danger">{error?.data?.message || error.error}</Message>
       ) : (
         <table className="container mx-auto">
           <AdminMenu />
-
           <thead className="w-full border">
             <tr className="mb-[5rem]">
               <th className="text-left pl-1">ITEMS</th>
@@ -27,12 +29,12 @@ const OrderList = () => {
               <th className="text-left pl-1">USER</th>
               <th className="text-left pl-1">DATA</th>
               <th className="text-left pl-1">TOTAL</th>
+             
               <th className="text-left pl-1">PAID</th>
-              <th className="text-left pl-1">DELIVERED</th>
+              <th className="text-left pl-1">STATUS</th>
               <th></th>
             </tr>
           </thead>
-
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
@@ -44,39 +46,22 @@ const OrderList = () => {
                   />
                 </td>
                 <td>{order._id}</td>
-
                 <td>{order.user ? order.user.username : "N/A"}</td>
-
-                <td>
-                  {order.createdAt ? order.createdAt.substring(0, 10) : "N/A"}
-                </td>
-
+                <td>{order.createdAt ? order.createdAt.substring(0, 10) : "N/A"}</td>
                 <td>$ {order.totalPrice}</td>
-
+               
                 <td className="py-2">
                   {order.isPaid ? (
-                    <p className="p-1 text-center bg-green-400 w-[6rem] rounded-full">
-                      Completed
-                    </p>
+                    <p className="p-1 text-center bg-green-400 w-[6rem] rounded-full">Completed</p>
                   ) : (
-                    <p className="p-1 text-center bg-red-400 w-[6rem] rounded-full">
-                      Pending
-                    </p>
+                    <p className="p-1 text-center bg-red-400 w-[6rem] rounded-full">Pending</p>
                   )}
                 </td>
-
-                <td className="px-2 py-2">
-                  {order.isDelivered ? (
-                    <p className="p-1 text-center bg-green-400 w-[6rem] rounded-full">
-                      Completed
-                    </p>
-                  ) : (
-                    <p className="p-1 text-center bg-red-400 w-[6rem] rounded-full">
-                      Pending
-                    </p>
-                  )}
+                <td className="py-2">
+                  <p className={`p-1 text-center ${order.status === "Pending" ? "bg-red-400" : order.status === "Confirmed" ? "bg-yellow-400" : order.status === "Shipping" ? "bg-blue-400" : "bg-green-400"} w-[6rem] rounded-full`}>
+                    {order.status}
+                  </p>
                 </td>
-
                 <td>
                   <Link to={`/order/${order._id}`}>
                     <button>More</button>
