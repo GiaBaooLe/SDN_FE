@@ -50,20 +50,20 @@ const ProductDetails = () => {
 
   return (
     <>
-    <div className="top-banner">
-            <img
-              className="top-banner-image"
-              src="/src/assets/banner.png"
-              alt="banner"
-            />
-            <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
-              <img
-                className="t logo"
-                src="/src/assets/logo-concung.png"
-                alt="logo"
-              />
-            </div>
-          </div>
+      <div className="top-banner">
+        <img
+          className="top-banner-image"
+          src="/src/assets/banner.png"
+          alt="banner"
+        />
+        <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
+          <img
+            className="t logo"
+            src="/src/assets/logo-concung.png"
+            alt="logo"
+          />
+        </div>
+      </div>
       <div className="my-4">
         <Link to="/" className="text-blue-500 hover:underline">
           Go Back
@@ -112,7 +112,8 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {product.countInStock > 0 && (
+
+              {product.countInStock > 0 && userInfo && !userInfo.isAdmin && (
                 <div className="flex items-center">
                   <Select
                     value={qty}
@@ -126,7 +127,7 @@ const ProductDetails = () => {
                     ))}
                   </Select>
                   <Button
-                  className="bg-pink-400"
+                    className="bg-pink-400"
                     type="primary"
                     onClick={addToCartHandler}
                     disabled={product.countInStock === 0}

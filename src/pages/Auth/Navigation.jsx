@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
+
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
@@ -39,9 +40,8 @@ const Navigation = () => {
   return (
     <div
       style={{ zIndex: 9999 }}
-      className={`${
-        showSidebar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white font-bold bg-pink-600 w-[15%] hover:w-[15%] h-[100vh]  fixed `}
+      className={`${showSidebar ? "hidden" : "flex"
+        } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4 text-white font-bold bg-pink-600 w-[15%] hover:w-[15%] h-[100vh]  fixed `}
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4">
@@ -68,32 +68,36 @@ const Navigation = () => {
           <span className="hidden nav-item-name mt-[3rem]">SHOP</span>{" "}
         </Link>
 
-        <Link to="/cart" className="flex relative">
-          <div className="flex items-center transition-transform transform hover:translate-x-2">
-            <AiOutlineShoppingCart className="mt-[3rem] mr-2" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Cart</span>{" "}
-          </div>
+        {userInfo && !userInfo.isAdmin && (
+          <Link to="/cart" className="flex relative">
+            <div className="flex items-center transition-transform transform hover:translate-x-2">
+              <AiOutlineShoppingCart className="mt-[3rem] mr-2" size={26} />
+              <span className="hidden nav-item-name mt-[3rem]">Cart</span>{" "}
+            </div>
 
-          <div className="absolute top-9">
-            {cartItems.length > 0 && (
-              <span>
-                <span className="px-1 py-0 text-sm text-black bg-pink-500 rounded-full">
-                  {cartItems.reduce((a, c) => a + c.qty, 0)}
+            <div className="absolute top-9">
+              {cartItems.length > 0 && (
+                <span>
+                  <span className="px-1 py-0 text-sm text-black bg-pink-500 rounded-full">
+                    {cartItems.reduce((a, c) => a + c.qty, 0)}
+                  </span>
                 </span>
-              </span>
-            )}
-          </div>
-        </Link>
+              )}
+            </div>
+          </Link>
+        )}
 
-        <Link to="/favorite" className="flex relative">
-          <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
-            <FaHeart className="mt-[3rem] mr-2" size={20} />
-            <span className="hidden nav-item-name mt-[3rem]">
-              Favorites
-            </span>{" "}
-            <FavoritesCount />
-          </div>
-        </Link>
+        {userInfo && !userInfo.isAdmin && (
+          <Link to="/favorite" className="flex relative">
+            <div className="flex justify-center items-center transition-transform transform hover:translate-x-2">
+              <FaHeart className="mt-[3rem] mr-2" size={20} />
+              <span className="hidden nav-item-name mt-[3rem]">
+                Favorites
+              </span>{" "}
+              <FavoritesCount />
+            </div>
+          </Link>
+        )}
       </div>
 
       <div className="relative">
@@ -109,9 +113,8 @@ const Navigation = () => {
           {userInfo && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 ml-1 ${
-                dropdownOpen ? "transform rotate-180" : ""
-              }`}
+              className={`h-4 w-4 ml-1 ${dropdownOpen ? "transform rotate-180" : ""
+                }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="white"
@@ -128,9 +131,8 @@ const Navigation = () => {
 
         {dropdownOpen && userInfo && (
           <ul
-            className={`absolute right-0 mt-2 mr-14 space-y-2 bg-pink-400 text-white ${
-              !userInfo.isAdmin ? "-top-20" : "-top-80"
-            } `}
+            className={`absolute right-0 mt-2 mr-14 space-y-2 bg-pink-400 text-white ${!userInfo.isAdmin ? "-top-20" : "-top-80"
+              } `}
           >
             {userInfo.isAdmin && (
               <>

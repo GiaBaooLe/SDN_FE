@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { toast } from "react-toastify";
 import HeartIcon from "./HeartIcon";
 
 const ProductCard = ({ p }) => {
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const addToCartHandler = (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
@@ -30,7 +31,10 @@ const ProductCard = ({ p }) => {
             style={{ height: "170px", objectFit: "cover" }}
           />
         </Link>
-        <HeartIcon product={p} />
+        
+        {userInfo && !userInfo.isAdmin && (
+          <HeartIcon product={p} />
+        )}
       </section>
 
       <div className="p-5">
@@ -72,12 +76,14 @@ const ProductCard = ({ p }) => {
             </svg>
           </Link>
 
-          <button
-            className="p-2 rounded-full"
-            onClick={() => addToCartHandler(p, 1)}
-          >
-            <AiOutlineShoppingCart size={25} />
-          </button>
+          {userInfo && !userInfo.isAdmin && (
+            <button
+              className="p-2 rounded-full"
+              onClick={() => addToCartHandler(p, 1)}
+            >
+              <AiOutlineShoppingCart size={25} />
+            </button>
+          )}
         </section>
       </div>
     </div>

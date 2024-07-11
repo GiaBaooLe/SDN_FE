@@ -99,12 +99,15 @@ const Profile = () => {
               >
                 Update
               </button>
-              <Link
-                to="/user-orders"
-                className="inline-block align-baseline font-bold text-sm text-pink-600 hover:text-pink-700"
-              >
-                My Orders
-              </Link>
+
+              {userInfo && !userInfo.isAdmin && (
+                <Link
+                  to="/user-orders"
+                  className="inline-block align-baseline font-bold text-sm text-pink-600 hover:text-pink-700"
+                >
+                  My Orders
+                </Link>
+              )}
             </div>
           </form>
         </div>
