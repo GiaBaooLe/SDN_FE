@@ -10,16 +10,26 @@ const { TextArea } = Input;
 const UpdateProductModal = ({ visible, onClose, product }) => {
   const [image, setImage] = useState(product?.image || "");
   const [imageUrl, setImageUrl] = useState(null);
+  const [category, setCategory] = useState([]);
   const [updateProduct] = useUpdateProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
-  const { data: categories } = useFetchCategoriesQuery();
+  // const { data: categories } = useFetchCategoriesQuery();
   const { data: productData, refetch } = useGetProductByIdQuery(product?._id);
+  const { data: categories, isLoading, isError } = useFetchCategoriesQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError && categories) {
+      setCategory(categories);
+    }
+  }, [isLoading, isError, categories]);
 
   useEffect(() => {
     if (productData && productData._id) {
       setImage(productData.image);
     }
   }, [productData]);
+
+ 
 
   const handleSubmit = async (values) => {
     try {
@@ -103,7 +113,7 @@ const UpdateProductModal = ({ visible, onClose, product }) => {
 
         <Form.Item label="Category" name="category" rules={[{ required: true, message: "Please select a category!" }]}>
           <Select placeholder="Select a category">
-            {categories?.map((c) => (
+            {category?.map((c) => (
               <Select.Option key={c._id} value={c._id}>
                 {c.name}
               </Select.Option>
