@@ -40,39 +40,42 @@ const ProductTabs = ({
           </li>
         ))}
       </ul>
+
       <div>
-        <Title level={2} className="mb-4 ">Write your Review</Title>
         {loadingProductReview && <Spin />}
-        {userInfo ? (
-          <Form onFinish={submitHandler} className="w-1/2 ">
-            <Form.Item
-              label="Rating"
-              required
-              rules={[{ required: true, message: "Please select a rating!" }]}
-            >
-              <Rate
-                onChange={(value) => setRating(value)}
-                value={rating}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Comment"
-              required
-              rules={[{ required: true, message: "Please enter your comment!" }]}
-            >
-              <TextArea
-                rows={4}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </Form.Item>
-            <Form.Item >
-              <Button type="primary" htmlType="submit" className="flex  justify-end bg-pink-400">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        ) : (
+        {userInfo && !userInfo.isAdmin ? (
+          <>
+            <Title level={2} className="mb-4">Write your Review</Title>
+            <Form onFinish={submitHandler} className="w-1/2">
+              <Form.Item
+                label="Rating"
+                required
+                rules={[{ required: true, message: "Please select a rating!" }]}
+              >
+                <Rate
+                  onChange={(value) => setRating(value)}
+                  value={rating}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Comment"
+                required
+                rules={[{ required: true, message: "Please enter your comment!" }]}
+              >
+                <TextArea
+                  rows={4}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className="flex justify-end bg-pink-400">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </>
+        ) : !userInfo ? (
           <Alert
             message={
               <span>
@@ -82,7 +85,7 @@ const ProductTabs = ({
             type="warning"
             showIcon
           />
-        )}
+        ) : null}
       </div>
     </div>
   );
