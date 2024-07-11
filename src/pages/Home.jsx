@@ -8,6 +8,7 @@ import Product from "./Products/Product";
 import { Carousel, Card } from "antd";
 
 import "./Home.css";
+import TawkToChat from "../components/TawkToChat";
 
 const { Meta } = Card;
 
@@ -20,6 +21,7 @@ const Home = () => {
   };
   return (
     <>
+     
      <div className=" p-3 mt-36">
        <Carousel afterChange={onChange} className="carousel">
         <div>
@@ -109,7 +111,7 @@ const Home = () => {
             </Link>
           </div>
           <div className="products-container">
-            <div className="products-grid ">
+            <div className="products-grid  ">
               {data.products.map((product) => (
                 <div key={product._id} className="product-item">
                   <Product product={product} />
