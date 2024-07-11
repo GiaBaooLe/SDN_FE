@@ -52,7 +52,7 @@ const AdminMenu = () => {
                 Create Category
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 className="list-item py-2 px-3 block mb-5 hover:bg-pink-600 rounded-sm"
                 to="/admin/productlist"
@@ -62,7 +62,7 @@ const AdminMenu = () => {
               >
                 Create Product
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink
                 className="list-item py-2 px-3 block mb-5 hover:bg-pink-600 rounded-sm"
