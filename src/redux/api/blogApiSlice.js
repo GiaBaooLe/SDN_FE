@@ -5,34 +5,34 @@ export const blogApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     fetchBlogs: builder.query({
       query: () => `${BLOG_URL}`,
-      providesTags: ['Blog'],
+      providesTags: ["Blog"],
     }),
     fetchBlogById: builder.query({
       query: (blogId) => `${BLOG_URL}/${blogId}`,
-      providesTags: ['Blog'],
+      providesTags: ["Blog"],
     }),
     createBlog: builder.mutation({
       query: (newBlog) => ({
         url: `${BLOG_URL}`,
-        method: 'POST',
+        method: "POST",
         body: newBlog,
       }),
-      invalidatesTags: ['Blog'],
+      invalidatesTags: ["Blog"],
     }),
     updateBlog: builder.mutation({
       query: ({ blogId, updatedBlog }) => ({
         url: `${BLOG_URL}/${blogId}`,
-        method: 'PUT',
+        method: "PUT",
         body: updatedBlog,
       }),
-      invalidatesTags: ['Blog'],
+      invalidatesTags: ["Blog"],
     }),
     deleteBlog: builder.mutation({
       query: (blogId) => ({
         url: `${BLOG_URL}/${blogId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: ['Blog'],
+      invalidatesTags: ["Blog"],
     }),
   }),
 });

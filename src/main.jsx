@@ -72,18 +72,17 @@ const router = createBrowserRouter(
         <Route path="product/update/:_id" element={<ProductUpdate />} />
         <Route path="orderlist" element={<OrderList />} />
         <Route path="manageblog" element={<ManageBlog />} />
-       
+
         <Route path="dashboard" element={<AdminDashboard />} />
       </Route>
     </Route>
-    
   )
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-  <PayPalScriptProvider>
-    <RouterProvider router={router} />
-  </PayPalScriptProvider>
-</Provider>
+    <PayPalScriptProvider>
+      <RouterProvider router={router} />
+    </PayPalScriptProvider>
+  </Provider>
 );
