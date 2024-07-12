@@ -18,7 +18,7 @@ const ProductCard = ({ p }) => {
   };
 
   return (
-    <div className=" relative w-[300px] bg-white rounded-lg shadow-md border dark:bg-white-400 dark:border-gray-700">
+    <div className=" relative w-[300px] bg-white p- rounded-lg shadow-md border dark:bg-white-400 dark:border-gray-700">
       <section className="relative overflow-hidden rounded-lg">
         <Link to={`/product/${p._id}`}>
           <span className="absolute bottom-3 right-3 bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
@@ -39,7 +39,7 @@ const ProductCard = ({ p }) => {
 
       <div className="p-5">
         <div className="flex justify-between">
-          <h5 className="mb-2 text-lg font-semibold text-whiet dark:text-black">{p?.name}</h5>
+          <h5 className="mb-2 text-lg font-semibold text-white dark:text-black">{p?.name}</h5>
 
           <p className="text-black font-semibold text-pink-500">
             {p?.price?.toLocaleString("en-US", {

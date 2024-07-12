@@ -11,6 +11,7 @@ import {
   FaStar,
   FaStore,
 } from "react-icons/fa";
+import { Button } from "antd";
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
@@ -51,7 +52,7 @@ const ProductCarousel = () => {
               quantity,
               countInStock,
             }) => (
-              <div key={_id}>
+              <div key={_id} className=" shadow-lg px-6 mx-6 h-full">
                 <img
                   src={image}
                   alt={name}
@@ -60,8 +61,10 @@ const ProductCarousel = () => {
 
                 <div className="mt-4 flex justify-between">
                   <div className="one">
-                    <h2>{name}</h2>
-                    <p> $ {price}</p> <br /> <br />
+                    <h2 className="text-lg font-semibold">{name}</h2>
+                    <span className="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
+              VND {price}
+            </span>
                     <p className="w-[25rem]">
                       {description.substring(0, 170)} ...
                     </p>

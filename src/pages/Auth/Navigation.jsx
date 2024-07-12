@@ -131,7 +131,7 @@ const Navigation = () => {
 
         {dropdownOpen && userInfo && (
           <ul
-            className={`absolute right-0 mt-2 mr-14 space-y-2 bg-pink-400 text-white ${!userInfo.isAdmin ? "-top-20" : "-top-80"
+            className={`absolute right-0 mt-2 mb-4  mr-14 space-y-2 bg-pink-400 text-white ${!userInfo.isAdmin ? "-top-20" : "-top-80"
               } `}
           >
             {userInfo.isAdmin && (
@@ -195,7 +195,7 @@ const Navigation = () => {
             <li>
               <button
                 onClick={logoutHandler}
-                className="block w-full px-4 py-2 text-left hover:bg-pink-500"
+                className="block w-full px-4 mb-20 text-left hover:bg-pink-500"
               >
                 Logout
               </button>
