@@ -70,7 +70,7 @@ const AllProducts = () => {
             <div className="flex flex-wrap justify-around items-center">
               {products.map((product) => (
                 <div key={product._id} className="block mb-4 overflow-hidden">
-                  <div className="flex">
+                  <div className="flex border rounded-lg">
                     <img
                       src={product.image}
                       alt={product.name}
