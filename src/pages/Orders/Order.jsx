@@ -202,19 +202,22 @@ const Order = () => {
           <span>$ {order.totalPrice}</span>
         </div>
 
-        {!order.isPaid && (
+        {!order.isPaid && userInfo && !userInfo.isAdmin && (
           <div>
-            {loadingPay && <Loader />}
-            {isPending ? (
+            {loadingPay ? (
               <Loader />
             ) : (
-              <div>
-                <PayPalButtons
-                  createOrder={createOrder}
-                  onApprove={onApprove}
-                  onError={onError}
-                />
-              </div>
+              isPending ? (
+                <Loader />
+              ) : (
+                <div>
+                  <PayPalButtons
+                    createOrder={createOrder}
+                    onApprove={onApprove}
+                    onError={onError}
+                  />
+                </div>
+              )
             )}
           </div>
         )}
