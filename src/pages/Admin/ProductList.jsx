@@ -72,7 +72,7 @@ const CreateProductModal = ({ visible, onClose }) => {
         <Form.Item label="Upload Image">
           <Upload customRequest={uploadFileHandler} listType="picture" showUploadList={false}>
             <Button icon={<UploadOutlined />}>
-              {image ? image.name : "Upload Image"}
+              {image ? image : "Upload Image"}
             </Button>
           </Upload>
         </Form.Item>
