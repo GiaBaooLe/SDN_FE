@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useGetProductDetailsQuery, useCreateReviewMutation } from "../../redux/api/productApiSlice";
+import {
+  useGetProductDetailsQuery,
+  useCreateReviewMutation,
+} from "../../redux/api/productApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import { FaBox, FaClock, FaShoppingCart, FaStore } from "react-icons/fa";
+import { FaBox, FaClock, FaStore } from "react-icons/fa";
 import moment from "moment";
 import HeartIcon from "./HeartIcon";
 
@@ -25,11 +28,17 @@ const ProductDetails = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId);
+  const {
+    data: product,
+    isLoading,
+    refetch,
+    error,
+  } = useGetProductDetailsQuery(productId);
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
+  const [createReview, { isLoading: loadingProductReview }] =
+    useCreateReviewMutation();
 
   const submitHandler = async () => {
     try {
@@ -49,14 +58,14 @@ const ProductDetails = () => {
   };
 
   return (
-    <>
+    <div className="mx-16">
       <div className="top-banner">
         <img
           className="top-banner-image"
           src="/src/assets/banner.png"
           alt="banner"
         />
-        <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
+        <div className="w-full bg-white flex justify-center pt-2 pb-3">
           <img
             className="t logo"
             src="/src/assets/logo-concung.png"
@@ -64,8 +73,8 @@ const ProductDetails = () => {
           />
         </div>
       </div>
-      <div className="my-4">
-        <Link to="/" className="text-blue-500 hover:underline">
+      <div className="my-4 mt-44">
+        <Link to="/" className="text-blue-500 hover:underline mt-44 mx-28">
           Go Back
         </Link>
       </div>
@@ -73,48 +82,59 @@ const ProductDetails = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error?.data?.message || error.message}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.message}
+        </Message>
       ) : (
         <>
           <div className="flex flex-wrap items-center mt-6">
             <div className="w-full md:w-1/2">
-              <img src={product.image} alt={product.name} className="w-full rounded-lg shadow-md" />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full rounded-lg shadow-md"
+              />
               <HeartIcon product={product} />
             </div>
 
             <div className="w-full md:w-1/2 pl-6">
               <Title level={2}>{product.name}</Title>
-              <Paragraph className="text-gray-700">{product.description}</Paragraph>
-              <Title level={3} className="text-red-500">$ {product.price}</Title>
+              <Paragraph className="text-gray-700">
+                {product.description}
+              </Paragraph>
+              <Title level={3} className="text-red-500">
+                $ {product.price}
+              </Title>
 
               <div className="flex flex-col md:flex-row md:justify-between my-4">
                 <div className="mb-4">
                   <h1 className="flex items-center mb-2">
-                    <FaStore className="mr-2 text-black" /> Brand: {product.brand}
+                    <FaStore className="mr-2 text-black" /> Brand:{" "}
+                    {product.brand}
                   </h1>
                   <h1 className="flex items-center mb-2">
-                    <FaClock className="mr-2 text-black" /> Added: {moment(product.createAt).fromNow()}
+                    <FaClock className="mr-2 text-black" /> Added:{" "}
+                    {moment(product.createAt).fromNow()}
                   </h1>
                   <h1 className="flex items-center mb-2">
-                    <FaStore className="mr-2 text-black" /> Reviews: {product.numReviews}
+                    <FaStore className="mr-2 text-black" /> Reviews:{" "}
+                    {product.numReviews}
                   </h1>
                 </div>
                 <div className="mb-4">
                   <h1 className="flex items-center mb-2">
-                    <FaStore className="mr-2 text-black" /> Ratings: {product.rating}
+                    <FaStore className="mr-2 text-black" /> Ratings:{" "}
+                    {product.rating}
                   </h1>
-                  {/* <h1 className="flex items-center mb-2">
-                    <FaShoppingCart className="mr-2 text-black" /> Quantity: {product.quantity}
-                  </h1> */}
                   <h1 className="flex items-center mb-2">
-                    <FaBox className="mr-2 text-black" /> In Stock: {product.countInStock}
+                    <FaBox className="mr-2 text-black" /> In Stock:{" "}
+                    {product.countInStock}
                   </h1>
                 </div>
               </div>
 
-
-              {product.countInStock > 0 && userInfo && !userInfo.isAdmin && (
-                <div className="flex items-center">
+              {product.countInStock > 0 && userInfo && !userInfo.isAdmin ? (
+                <div className="flex items-center justify-center">
                   <Select
                     value={qty}
                     onChange={(value) => setQty(value)}
@@ -135,6 +155,16 @@ const ProductDetails = () => {
                     Add To Cart
                   </Button>
                 </div>
+              ) : (
+                <div className="flex justify-center">
+                  <Button
+                    className="bg-gray-500 text-white"
+                    type="primary"
+                    disabled
+                  >
+                    Out of Stock
+                  </Button>
+                </div>
               )}
             </div>
 
@@ -153,7 +183,7 @@ const ProductDetails = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

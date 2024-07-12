@@ -20,7 +20,7 @@ const BlogDetail = () => {
           <img className="logo" src="/src/assets/logo-concung.png" alt="logo" />
         </div>
       </div>
-      <div className="mx-20 mt-44 px-4 py-6">
+      <div className="mx-28 mt-44 px-4 py-6 container">
         <Title level={1} className="text-2xl font-bold mb-4">{blog.title}</Title>
         <img src={blog.image} alt={blog.title} className="object-cover h-64 w-full mb-4" />
         <Paragraph className="text-gray-500 text-sm mb-4">Created at: {new Date(blog.createdAt).toLocaleDateString()} {new Date(blog.createdAt).toLocaleTimeString()}</Paragraph>

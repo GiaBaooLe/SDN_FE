@@ -23,13 +23,19 @@ const Blog = () => {
         </div>
       </div>
       <div className="mx-16 px-4 py-6 mt-44">
+      <div className="my-4 ">
+        <Link to="/" className="text-blue-500 hover:underline mx-28">
+          Go Back
+        </Link>
+      </div>
         <div className="flex justify-center">
+       
           <Title level={1} className="text-2xl font-bold mb-4 text-center">
             Blog{" "}
           </Title>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mx-12 ">
           {blogs.map((blog) => (
             <Card
               key={blog._id}
@@ -48,7 +54,9 @@ const Blog = () => {
                 >
                   <Button  className="text-white bg-pink-400 font-semibold">Read more</Button>
                 </Link>,
+                
               ]}
+             
               className="shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               <Title level={4} className="text-lg">

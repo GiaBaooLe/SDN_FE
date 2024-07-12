@@ -85,7 +85,7 @@ const Shop = () => {
   };
 
   return (
-    <>
+    <div className="container mx-12">
      <div className="top-banner">
             <img
               className="top-banner-image"
@@ -100,7 +100,7 @@ const Shop = () => {
               />
             </div>
           </div>
-      <div className="container px-16 mt-44">
+      <div className="container px-16 mt-48">
       <div className="mx-4">
           <SearchBar onSearch={handleSearch} /> 
       </div>
@@ -197,7 +197,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Shop;
