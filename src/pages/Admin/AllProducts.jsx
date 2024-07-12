@@ -1,10 +1,54 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { useAllProductsQuery } from "../../redux/api/productApiSlice";
+import { useState } from "react";
 import AdminMenu from "./AdminMenu";
+import CreateProductModal from "./ProductList";
+import UpdateProductModal from "./ProductUpdate";
+import { Modal } from "antd";
+import { useDeleteProductMutation } from "../../redux/api/productApiSlice";
 
 const AllProducts = () => {
-  const { data: products, isLoading, isError } = useAllProductsQuery();
+  const { data: products, isLoading, isError, refetch } = useAllProductsQuery();
+  const [isCreateModalVisible, setCreateModalVisible] = useState(false);
+  const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const navigate = useNavigate();
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleDelete = async (id) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this product?",
+      okText: "Delete",
+      onOk: async () => {
+        await deleteProduct(id);
+        refetch();
+      },
+      okButtonProps: {
+        style: {
+          backgroundColor: 'red',
+          color: '#ffffff',
+          borderColor: '#ff4d6c',
+        },
+      },
+    });
+  };
+
+  const showCreateModal = () => {
+    setCreateModalVisible(true);
+  };
+
+  const showUpdateModal = (product) => {
+    setCurrentProduct(product);
+    setUpdateModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setCreateModalVisible(false);
+    setUpdateModalVisible(false);
+    setCurrentProduct(null);
+    refetch();
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -17,18 +61,15 @@ const AllProducts = () => {
   return (
     <>
       <div className="container mx-[9rem]">
-        <div className="flex flex-col  md:flex-row">
+        <div className="flex flex-col md:flex-row">
           <div className="p-3">
             <div className="ml-[2rem] text-xl font-bold h-12">
-              All Products ({products.length})
+              Manage Products ({products.length})
             </div>
+            <button onClick={showCreateModal} className="btn btn-primary bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">Create Product</button>
             <div className="flex flex-wrap justify-around items-center">
               {products.map((product) => (
-                <Link
-                  key={product._id}
-                  to={`/admin/product/update/${product._id}`}
-                  className="block mb-4 overflow-hidden"
-                >
+                <div key={product._id} className="block mb-4 overflow-hidden">
                   <div className="flex">
                     <img
                       src={product.image}
@@ -51,32 +92,13 @@ const AllProducts = () => {
                       </p>
 
                       <div className="flex justify-between">
-                        <Link
-                          to={`/admin/product/update/${product._id}`}
-                          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-pink-600 rounded-lg hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800"
-                        >
-                          Update Product
-                          <svg
-                            className="w-3.5 h-3.5 ml-2"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 14 10"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M1 5h12m0 0L9 1m4 4L9 9"
-                            />
-                          </svg>
-                        </Link>
+                        <button onClick={() => showUpdateModal(product)} className="btn btn-secondary bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Update</button>
+                        <button onClick={() => handleDelete(product._id)} className="btn btn-danger bg-red-500 text-white rounded-full px-4 py-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Delete</button>
                         <p>$ {product?.price}</p>
                       </div>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -85,6 +107,9 @@ const AllProducts = () => {
           </div>
         </div>
       </div>
+
+      {isCreateModalVisible && <CreateProductModal visible={isCreateModalVisible} onClose={handleModalClose} />}
+      {isUpdateModalVisible && <UpdateProductModal visible={isUpdateModalVisible} onClose={handleModalClose} product={currentProduct} />}
     </>
   );
 };

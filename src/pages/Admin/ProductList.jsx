@@ -1,25 +1,20 @@
+import { Modal, Form, Input, Button, Select, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  useCreateProductMutation,
-  useUploadProductImageMutation,
-} from "../../redux/api/productApiSlice";
+import { useCreateProductMutation, useUploadProductImageMutation } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
-import { Button, Input, Form, Upload, Select, Row, Col } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import AdminMenu from "./AdminMenu";
+import { useNavigate } from "react-router-dom";  // Sử dụng useNavigate
 
 const { TextArea } = Input;
 
-const ProductList = () => {
+const CreateProductModal = ({ visible, onClose }) => {
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
-  const navigate = useNavigate();
-
-  const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
+  const [uploadProductImage] = useUploadProductImageMutation();
   const { data: categories } = useFetchCategoriesQuery();
+  const navigate = useNavigate();  // Khởi tạo useNavigate
 
   const handleSubmit = async (values) => {
     try {
@@ -33,17 +28,22 @@ const ProductList = () => {
       productData.append("brand", values.brand);
       productData.append("countInStock", values.stock);
 
-      const { data } = await createProduct(productData);
+      const result = await createProduct(productData).unwrap();
 
-      if (data.error) {
-        toast.error("Product creation failed. Try Again.");
+      if (result.error) {
+        toast.error(result.error);
       } else {
-        toast.success(`${data.name} is created`);
-        navigate("/");
+        toast.success(`${result.name} is created`);
+        onClose();  // Đóng modal
+        navigate("/admin/allproductslist");  // Chuyển hướng
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product creation failed. Try Again.");
+      if (error?.data?.error) {
+        toast.error(error.data.error);
+      } else {
+        toast.error("Product creation failed. Try Again.");
+      }
     }
   };
 
@@ -62,126 +62,63 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container xl:mx-[9rem] sm:mx-[0]">
-      <div className="flex flex-col md:flex-row">
-        <AdminMenu />
-        <div className="md:w-3/4 p-3">
-          <h1 className="text-4xl font-bold">Create Product</h1>
+    <Modal
+      title="Create Product"
+      open={visible}
+      onCancel={onClose}
+      footer={null}
+    >
+      <Form layout="vertical" onFinish={handleSubmit} initialValues={{ stock: 0 }}>
+        <Form.Item label="Upload Image">
+          <Upload customRequest={uploadFileHandler} listType="picture" showUploadList={false}>
+            <Button icon={<UploadOutlined />}>
+              {image ? image.name : "Upload Image"}
+            </Button>
+          </Upload>
+        </Form.Item>
 
-          {imageUrl && (
-            <div className="text-center">
-              <img
-                src={imageUrl}
-                alt="product"
-                className="block mx-auto max-h-[200px]"
-              />
-            </div>
-          )}
+        <Form.Item label="Name" name="name" rules={[{ required: true, message: "Please input the name!" }]}>
+          <Input />
+        </Form.Item>
 
-          <Form
-            layout="vertical"
-            onFinish={handleSubmit}
-            initialValues={{ stock: 0 }}
-          >
-            <Form.Item label="Upload Image">
-              <Upload
-                customRequest={uploadFileHandler}
-                listType="picture"
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>
-                  {image ? image.name : "Upload Image"}
-                </Button>
-              </Upload>
-            </Form.Item>
+        <Form.Item label="Price" name="price" rules={[{ required: true, message: "Please input the price!" }]}>
+          <Input type="number" />
+        </Form.Item>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Name"
-                  name="name"
-                  rules={[{ required: true, message: "Please input the name!" }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Price"
-                  name="price"
-                  rules={[{ required: true, message: "Please input the price!" }]}
-                >
-                  <Input type="number" />
-                </Form.Item>
-              </Col>
-            </Row>
+        <Form.Item label="Quantity" name="quantity" rules={[{ required: true, message: "Please input the quantity!" }]}>
+          <Input type="number" />
+        </Form.Item>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Quantity"
-                  name="quantity"
-                  rules={[{ required: true, message: "Please input the quantity!" }]}
-                >
-                  <Input type="number" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Brand"
-                  name="brand"
-                  rules={[{ required: true, message: "Please input the brand!" }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-            </Row>
+        <Form.Item label="Brand" name="brand" rules={[{ required: true, message: "Please input the brand!" }]}>
+          <Input />
+        </Form.Item>
 
-            <Form.Item
-              label="Description"
-              name="description"
-              rules={[{ required: true, message: "Please input the description!" }]}
-            >
-              <TextArea rows={4} />
-            </Form.Item>
+        <Form.Item label="Description" name="description" rules={[{ required: true, message: "Please input the description!" }]}>
+          <TextArea rows={4} />
+        </Form.Item>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Count In Stock"
-                  name="stock"
-                  rules={[{ required: true, message: "Please input the stock!" }]}
-                >
-                  <Input type="number" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Category"
-                  name="category"
-                  rules={[{ required: true, message: "Please select a category!" }]}
-                >
-                  <Select placeholder="Select a category">
-                    {categories?.map((c) => (
-                      <Select.Option key={c._id} value={c._id}>
-                        {c.name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
+        <Form.Item label="Count In Stock" name="stock" rules={[{ required: true, message: "Please input the stock!" }]}>
+          <Input type="number" />
+        </Form.Item>
 
-            <Form.Item>
-              <Button className="bg-pink-600 hover:bg-pink-700 text-white" htmlType="submit" block>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </div>
-      </div>
-    </div>
+        <Form.Item label="Category" name="category" rules={[{ required: true, message: "Please select a category!" }]}>
+          <Select placeholder="Select a category">
+            {categories?.map((c) => (
+              <Select.Option key={c._id} value={c._id}>
+                {c.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item>
+          <button type="submit" className="bg-pink-500 text-white px-4 py-2 rounded-md block w-full">
+            Submit
+          </button>
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 };
 
-export default ProductList;
+export default CreateProductModal;

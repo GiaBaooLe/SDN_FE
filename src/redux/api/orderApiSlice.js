@@ -10,13 +10,11 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: order,
       }),
     }),
-
     getOrderDetails: builder.query({
       query: (id) => ({
         url: `${ORDERS_URL}/${id}`,
       }),
     }),
-
     payOrder: builder.mutation({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
@@ -24,43 +22,49 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         body: details,
       }),
     }),
-
     getPaypalClientId: builder.query({
       query: () => ({
         url: PAYPAL_URL,
       }),
     }),
-
     getMyOrders: builder.query({
       query: () => ({
         url: `${ORDERS_URL}/mine`,
       }),
       keepUnusedDataFor: 5,
     }),
-
     getOrders: builder.query({
       query: () => ({
         url: ORDERS_URL,
       }),
     }),
-
     deliverOrder: builder.mutation({
       query: (orderId) => ({
         url: `${ORDERS_URL}/${orderId}/deliver`,
         method: "PUT",
       }),
     }),
-
+    updateOrderStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `${ORDERS_URL}/${id}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+    }),
     getTotalOrders: builder.query({
-      query: () => `${ORDERS_URL}/total-orders`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-orders`,
+      }),
     }),
-
     getTotalSales: builder.query({
-      query: () => `${ORDERS_URL}/total-sales`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-sales`,
+      }),
     }),
-
     getTotalSalesByDate: builder.query({
-      query: () => `${ORDERS_URL}/total-sales-by-date`,
+      query: () => ({
+        url: `${ORDERS_URL}/total-sales-by-date`,
+      }),
     }),
   }),
 });
@@ -69,7 +73,6 @@ export const {
   useGetTotalOrdersQuery,
   useGetTotalSalesQuery,
   useGetTotalSalesByDateQuery,
-  // ------------------
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
@@ -77,4 +80,5 @@ export const {
   useGetMyOrdersQuery,
   useDeliverOrderMutation,
   useGetOrdersQuery,
+  useUpdateOrderStatusMutation,
 } = orderApiSlice;
