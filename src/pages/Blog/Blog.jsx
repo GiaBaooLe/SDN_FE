@@ -1,6 +1,7 @@
 import { useFetchBlogsQuery } from "../../redux/api/blogApiSlice";
 import { Link } from "react-router-dom";
 import { Card, Typography, Skeleton, Button } from "antd";
+import SearchBar from "../../components/SearchBar";
 
 const { Title, Paragraph } = Typography;
 
@@ -9,6 +10,13 @@ const Blog = () => {
 
   if (isLoading) return <Skeleton active />;
   if (isError) return <p>Error fetching blogs</p>;
+
+  const handleSearch = (searchTerm) => {
+    const filteredBlogs = filteredBlogsQuery.data.filter((blogs) =>
+      blogs.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    dispatch(setBlogs(filteredBlogs));
+  };
 
   return (
     <div>
@@ -21,7 +29,9 @@ const Blog = () => {
         <div className="w-full bg-white  flex justify-center  pt-2 pb-3">
           <img className="logo" src="/src/assets/logo-concung.png" alt="logo" />
         </div>
+        
       </div>
+      <div><SearchBar onSearch={handleSearch} /> </div>
       <div className="mx-16 px-4 py-6 mt-44">
         <div className="flex justify-center">
           <Title level={1} className="text-2xl font-bold mb-4 text-center">
