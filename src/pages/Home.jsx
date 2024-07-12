@@ -20,7 +20,7 @@ const Home = () => {
     console.log(currentSlide);
   };
   return (
-    <>
+    <div className=" mx-12">
      
      <div className=" p-3 mt-36">
        <Carousel afterChange={onChange} className="carousel">
@@ -121,7 +121,7 @@ const Home = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

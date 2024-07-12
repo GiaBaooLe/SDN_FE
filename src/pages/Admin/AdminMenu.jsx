@@ -71,7 +71,7 @@ const AdminMenu = () => {
                   color: isActive ? "pink" : "white",
                 })}
               >
-                All Products
+                Manage Products
               </NavLink>
             </li>
             <li>

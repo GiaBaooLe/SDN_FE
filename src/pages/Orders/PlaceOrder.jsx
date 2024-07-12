@@ -42,10 +42,10 @@ const PlaceOrder = () => {
   };
 
   return (
-    <>
+    <div className=" mx-16">
       <ProgressSteps step1 step2 step3 />
 
-      <div className="container mx-auto mt-8">
+      <div className="container mx-16 mt-8">
         {cart.cartItems.length === 0 ? (
           <Message>Your cart is empty</Message>
         ) : (
@@ -138,7 +138,7 @@ const PlaceOrder = () => {
           {isLoading && <Loader />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
