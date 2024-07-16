@@ -23,7 +23,7 @@ const Cart = () => {
   };
 
   return (
-    <>
+    <div className="mx-24">
       <div className="top-banner">
         <img
           className="top-banner-image"
@@ -57,12 +57,12 @@ const Cart = () => {
                     />
                   </div>
                   <div className="flex-1 ml-4">
-                    <Link to={`/product/${item._id}`} className="text-pink-500">
+                    <Link to={`/product/${item._id}`} className="text-pink-500 text-lg font-semibold">
                       {item.name}
                     </Link>
-                    <div className="mt-2 text-gray-600">{item.brand}</div>
+                    <div className="mt-2 text-gray-600">Brand: {item.brand}</div>
                     <div className="mt-2 text-gray-800 font-bold">
-                      ${item.price}
+                      {item.price} VND
                     </div>
                   </div>
                   <div className="w-24">
@@ -91,13 +91,13 @@ const Cart = () => {
                 </div>
               ))}
             </div>
-            <div className="w-full lg:w-1/4">
+            <div className="w-full lg:w-1/4 mt-12">
               <div className="p-4 rounded-lg border shadow-sm bg-white">
                 <h2 className="text-xl font-semibold mb-2">
                   Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items
                 </h2>
                 <div className="text-2xl font-bold mb-4">
-                  ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                  {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)} VND
                 </div>
                 <button
                   className="bg-pink-500 py-2 px-4 rounded-full text-lg w-full text-white hover:bg-pink-600 transition duration-300"
@@ -111,7 +111,7 @@ const Cart = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
