@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
@@ -66,14 +66,14 @@ const Order = () => {
     toast.error(err.message);
   };
 
-  const deliverHandler = async () => {
-    try {
-      await deliverOrder(orderId);
-      refetch();
-    } catch (error) {
-      toast.error(error?.data?.message || error.message);
-    }
-  };
+  // const deliverHandler = async () => {
+  //   try {
+  //     await deliverOrder(orderId);
+  //     refetch();
+  //   } catch (error) {
+  //     toast.error(error?.data?.message || error.message);
+  //   }
+  // };
 
   const updateStatusHandler = async (status) => {
     try {

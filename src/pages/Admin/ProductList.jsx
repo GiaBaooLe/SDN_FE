@@ -1,16 +1,18 @@
+
+import PropTypes from "prop-types";
 import { Modal, Form, Input, Button, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useState } from "react";
 import { useCreateProductMutation, useUploadProductImageMutation } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";  // Sử dụng useNavigate
+import { useState } from "react";
 
 const { TextArea } = Input;
 
 const CreateProductModal = ({ visible, onClose }) => {
   const [image, setImage] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [setImageUrl] = useState(null);
   const [createProduct] = useCreateProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
   const { data: categories } = useFetchCategoriesQuery();
@@ -119,6 +121,11 @@ const CreateProductModal = ({ visible, onClose }) => {
       </Form>
     </Modal>
   );
+};
+
+CreateProductModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default CreateProductModal;

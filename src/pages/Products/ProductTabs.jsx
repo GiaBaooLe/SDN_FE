@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { FaStar } from "react-icons/fa";
+import PropTypes from "prop-types";
+
 import { Link } from "react-router-dom";
 import { Spin, Alert, Form, Rate, Input, Button, Typography } from "antd";
 import moment from "moment";
@@ -89,6 +90,27 @@ const ProductTabs = ({
       </div>
     </div>
   );
+};
+
+ProductTabs.propTypes = {
+  loadingProductReview: PropTypes.bool,
+  userInfo: PropTypes.object,
+  submitHandler: PropTypes.func.isRequired,
+  rating: PropTypes.number.isRequired,
+  setRating: PropTypes.func.isRequired,
+  comment: PropTypes.string.isRequired,
+  setComment: PropTypes.func.isRequired,
+  product: PropTypes.shape({
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        comment: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
 };
 
 export default ProductTabs;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useFetchBlogsQuery, useCreateBlogMutation, useUpdateBlogMutation, useDeleteBlogMutation } from "../../redux/api/blogApiSlice";
 import { useAllProductsQuery } from "../../redux/api/productApiSlice";
 import { Button, Form, Input, Modal, Card, message, Typography, Skeleton, Alert, Select } from "antd";
@@ -84,8 +84,8 @@ const ManageBlog = () => {
             key={blog._id}
             cover={<img src={blog.image} alt={blog.title} className="object-cover h-40 w-full" />}
             actions={[
-              <Button className="bg-pink-400 text-white font-semibold" type="link" onClick={() => showModal("edit", blog)}>Edit</Button>,
-              <Button className="text-pink-400 font-semibold" type="link" onClick={() => handleDeleteBlog(blog._id)} loading={isDeleting}>Delete</Button>,
+              <Button key="edit" className="bg-pink-400 text-white font-semibold" type="link" onClick={() => showModal("edit", blog)}>Edit</Button>,
+              <Button key="delete" className="text-pink-400 font-semibold" type="link" onClick={() => handleDeleteBlog(blog._id)} loading={isDeleting}>Delete</Button>,
             ]}
             className="shadow-lg hover:shadow-xl transition-shadow duration-300"
           >

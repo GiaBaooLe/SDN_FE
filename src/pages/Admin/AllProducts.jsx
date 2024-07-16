@@ -1,12 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { useAllProductsQuery } from "../../redux/api/productApiSlice";
+import { useAllProductsQuery, useDeleteProductMutation } from "../../redux/api/productApiSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminMenu from "./AdminMenu";
 import CreateProductModal from "./ProductList";
 import UpdateProductModal from "./ProductUpdate";
 import { Modal } from "antd";
-import { useDeleteProductMutation } from "../../redux/api/productApiSlice";
 
 const AllProducts = () => {
   const { data: products, isLoading, isError, refetch } = useAllProductsQuery();
@@ -23,6 +22,7 @@ const AllProducts = () => {
       onOk: async () => {
         await deleteProduct(id);
         refetch();
+        navigate("/shop");
       },
       okButtonProps: {
         style: {

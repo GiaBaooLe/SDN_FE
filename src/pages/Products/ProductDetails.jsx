@@ -133,38 +133,42 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {product.countInStock > 0 && userInfo && !userInfo.isAdmin ? (
-                <div className="flex items-center justify-center">
-                  <Select
-                    value={qty}
-                    onChange={(value) => setQty(value)}
-                    className="w-24 mr-4"
-                  >
-                    {[...Array(product.countInStock).keys()].map((x) => (
-                      <Option key={x + 1} value={x + 1}>
-                        {x + 1}
-                      </Option>
-                    ))}
-                  </Select>
-                  <Button
-                    className="bg-pink-400"
-                    type="primary"
-                    onClick={addToCartHandler}
-                    disabled={product.countInStock === 0}
-                  >
-                    Add To Cart
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex justify-center">
-                  <Button
-                    className="bg-gray-500 text-white"
-                    type="primary"
-                    disabled
-                  >
-                    Out of Stock
-                  </Button>
-                </div>
+              {userInfo && !userInfo.isAdmin && (
+                <>
+                  {product.countInStock > 0 ? (
+                    <div className="flex items-center justify-center">
+                      <Select
+                        value={qty}
+                        onChange={(value) => setQty(value)}
+                        className="w-24 mr-4"
+                      >
+                        {[...Array(product.countInStock).keys()].map((x) => (
+                          <Option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </Option>
+                        ))}
+                      </Select>
+                      <Button
+                        className="bg-pink-400"
+                        type="primary"
+                        onClick={addToCartHandler}
+                        disabled={product.countInStock === 0}
+                      >
+                        Add To Cart
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center">
+                      <Button
+                        className="bg-gray-500 text-white"
+                        type="primary"
+                        disabled
+                      >
+                        Out of Stock
+                      </Button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

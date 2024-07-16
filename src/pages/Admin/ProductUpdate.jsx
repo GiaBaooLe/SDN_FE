@@ -4,17 +4,17 @@ import { UploadOutlined } from "@ant-design/icons";
 import { useUpdateProductMutation, useUploadProductImageMutation, useGetProductByIdQuery } from "../../redux/api/productApiSlice";
 import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 const { TextArea } = Input;
 
 const UpdateProductModal = ({ visible, onClose, product }) => {
   const [image, setImage] = useState(product?.image || "");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [setImageUrl] = useState(null);
   const [category, setCategory] = useState([]);
   const [updateProduct] = useUpdateProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
-  // const { data: categories } = useFetchCategoriesQuery();
-  const { data: productData, refetch } = useGetProductByIdQuery(product?._id);
+  const { data: productData } = useGetProductByIdQuery(product?._id);
   const { data: categories, isLoading, isError } = useFetchCategoriesQuery();
 
   useEffect(() => {
@@ -28,8 +28,6 @@ const UpdateProductModal = ({ visible, onClose, product }) => {
       setImage(productData.image);
     }
   }, [productData]);
-
- 
 
   const handleSubmit = async (values) => {
     try {
@@ -131,5 +129,20 @@ const UpdateProductModal = ({ visible, onClose, product }) => {
   );
 };
 
-export default UpdateProductModal;
+UpdateProductModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  product: PropTypes.shape({
+    _id: PropTypes.string,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.number,
+    quantity: PropTypes.number,
+    brand: PropTypes.string,
+    countInStock: PropTypes.number,
+    category: PropTypes.string,
+  }).isRequired,
+};
 
+export default UpdateProductModal;

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
-import { Table, Button, Input, Space, Typography } from "antd";
-import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserMutation } from "../../redux/api/usersApiSlice";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { Table } from "antd";
+import { useGetUsersQuery,  } from "../../redux/api/usersApiSlice";
+
 import AdminMenu from "./AdminMenu";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 
-const { Text } = Typography;
+
 
 const UserList = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();

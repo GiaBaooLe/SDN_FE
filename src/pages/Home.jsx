@@ -5,12 +5,12 @@ import Message from "../components/Message";
 import Header from "../components/Header";
 import Product from "./Products/Product";
 
-import { Carousel, Card } from "antd";
+import { Carousel } from "antd";
 
 import "./Home.css";
-import TawkToChat from "../components/TawkToChat";
 
-const { Meta } = Card;
+
+
 
 const Home = () => {
   const { keyword } = useParams();
